@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1077530980435",
+    "project_id": "muhtas3-cb589",
+    "storage_bucket": "muhtas3-cb589.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077530980435:android:335526ee9839f1d0b9d6a6",
+        "android_client_info": {
+          "package_name": "com.kotlinegitim.myapplicationmt3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7NxPLETFeBRspNNtNFTuzpX1dlgY06pk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
