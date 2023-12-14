@@ -31,6 +31,7 @@
     <string name="product_description_hint">Ürünü birkaç cümle ile anlatın. Örn: Sadece iki kere giyildi. M beden uyumlu gibi..</string>
     <string name="product_prize_hint">Satış Fiyatı</string>
     <string name="product_photo_count">Maksimum 3 Adet Fotoğraf Konulabilir</string>
+    <string name="search_bar_hint">Aradığınız ürün kategorisini yazınız</string>
     <string name="edit">Düzenle</string>
     <string name="save_changes">Değişiklikleri Kaydet</string>
     <string name="location">Lütfen Konumunuzu Giriniz.</string>

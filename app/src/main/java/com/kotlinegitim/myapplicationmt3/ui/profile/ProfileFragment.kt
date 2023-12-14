@@ -80,7 +80,6 @@ class ProfileFragment() : Fragment() {
                 if (!task.isSuccessful) {
                     throw task.exception!!
                 }
-                Log.e("dffdg","${imageRef.downloadUrl}")
                 // Görselin indirilebilir URL'sini alma
                 imageRef.downloadUrl
             }.addOnCompleteListener { task ->

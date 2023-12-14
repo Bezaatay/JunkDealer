@@ -10,6 +10,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -22,7 +27,20 @@ class PersonelInfosFragment : Fragment() {
     private lateinit var personelInfosViewModel : PersonelInfosViewModel
     private lateinit var auth : FirebaseAuth
     val storage = Firebase.storage
+
     private val binding get() = _binding
+
+    private val callback = OnMapReadyCallback { googleMap ->
+
+        personelInfosViewModel.locationLiveData.observe(viewLifecycleOwner){
+            if (it != null) {
+                // LiveData'dan alınan LatLng değerini kullanarak işlemlerinizi gerçekleştirin
+                val MyHome = it
+                googleMap.addMarker(MarkerOptions().position(MyHome).title("Home"))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MyHome,17f))
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,8 +56,8 @@ class PersonelInfosFragment : Fragment() {
 
         val root: View = binding.root
 
-        personelInfosViewModel.getMailandUsername(binding.editTextusername,binding.editTextMail)
-        personelInfosViewModel.getPassword(binding.editTextpassword)
+        personelInfosViewModel.getInformations(binding.editTextusername,binding.editTextMail,binding.editTextpassword)
+        personelInfosViewModel.getLocation()
 
         val  currentUser = auth.currentUser
         val storageRef = storage.reference
@@ -61,7 +79,11 @@ class PersonelInfosFragment : Fragment() {
 
         return root
     }
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val mapFragment = childFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment?
+        mapFragment?.getMapAsync(callback)
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding

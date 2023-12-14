@@ -16,7 +16,7 @@ class MapsViewModel : ViewModel() {
     private val userDocRef = uid?.let { db.collection("users").document(it) }
 
     // "location" koleksiyonunu oluşturun veya varsa alın
-    private val locationCollectionRef = userDocRef?.collection("location")
+    private val locationCollectionRef = userDocRef?.collection("location")?.document(uid+"location")
 
     fun saveLatLng(latitude: Double, longitude: Double, time: Long) {
         val latLngValues = hashMapOf(
@@ -24,7 +24,7 @@ class MapsViewModel : ViewModel() {
             "longitude" to longitude,
             "time" to time
         )
-        locationCollectionRef?.add(latLngValues)
+        locationCollectionRef?.set(latLngValues)
             ?.addOnSuccessListener {
                 Log.e("success","depolama basairili")
             }

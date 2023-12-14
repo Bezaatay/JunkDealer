@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -45,13 +46,22 @@ class HomeFragment : Fragment() {
 
         recyclerView = binding.RecyclerViewID
 
-        //homeViewModel.loadItems()
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+        })
+
         loadItems()
         return root
     }
 
     private fun loadItems() {
-        val item = db.collection("products").get()
+        db.collection("products").get()
             .addOnSuccessListener { documents ->
                 for (document in documents)  {
                     val productUrl = document.getString("Product-Url")

@@ -13,6 +13,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -25,6 +27,8 @@ class SellFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     var selectedImageUri : Uri? = null
     var selectedBitmap : Bitmap? = null
+    private val ListOfProducts = ArrayList<String>()
+    private lateinit var dataAdapter : ArrayAdapter<String>
 
     // Kullanıcıya galeriye erişim izni istemek için izin kodu
     private val READ_EXTERNAL_STORAGE_PERMISSION = 123
@@ -35,11 +39,23 @@ class SellFragment : Fragment() {
         sellViewModel = ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
-        ).get(SellViewModel::class.java)
+        )[SellViewModel::class.java]
         _binding = FragmentSellBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         auth = FirebaseAuth.getInstance()
+
+        ListOfProducts.add("Ayakkabı")
+        ListOfProducts.add("Buzdolabı")
+
+        dataAdapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,android.R.id.text1,ListOfProducts)
+
+        binding.spinner.adapter = dataAdapter
+
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            //tıkladıktan sonra kaydeden kodu yaz
+
+        }
 
         binding.UploadProductBtn.setOnClickListener {
             val ProductInfos= binding.editTextProductInfos.text.toString()

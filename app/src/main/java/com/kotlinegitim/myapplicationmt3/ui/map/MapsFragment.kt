@@ -50,7 +50,7 @@ class MapsFragment : Fragment() {
                 googleMap.addMarker(markerOptions)
 
                 // Haritayı tıklanan konuma ve belirli bir zoom düzeyine hareket ettirme
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newLatLng, 17f))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newLatLng, 20f))
 
                 mapsViewModel.saveLatLng(location.latitude,location.longitude,location.time)
 
