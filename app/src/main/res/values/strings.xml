@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">MyApplicationMT3</string>
+    <string name="title_home">Anasayfa</string>
+    <string name="title_sell">Sat</string>
+    <string name="title_profile">Profil</string>
+    <string name="forgot_password_text">Şifremi Unuttum</string>
+    <string name="welcome_message">Hoş geldiniz!</string>
+    <string name="dont_have_account">Henüz Hesabım Yok.</string>
+    <string name="register">Kayıt Ol!</string>
+    <string name="email_hint">Email</string>
+    <string name="username_hint">Kullanıcı Adı</string>
+    <string name="password_hint">Şifre</string>
+    <string name="comfirm_password_hint">Şifrenizi Tekrar Giriniz</string>
+    <string name="Login">Giriş Yap</string>
+    <string name="register_message">Kayıt Ol!</string>
+    <string name="have_account">Hesabım Var.</string>
+    <string name="info">Kişisel Bilgilerim</string>
+    <string name="favorites">Favorilerim</string>
+    <string name="settings">Ayarlar</string>
+    <string name="logout">Çıkış Yap</string>
+    <string name="null_hint">null</string>
+    <string name="change_password">Şifremi Güncelle</string>
+    <string name="change_location">Konumumu Güncelle</string>
+    <string name="purchases">Aldıklarım</string>
+    <string name="upload_product">Satışa Koy</string>
+    <string name="product_infos">Ürün Bilgilerini Gir</string>
+    <string name="product_description">Açıklama</string>
+    <string name="product_prize">Fiyat Belirle</string>
+    <string name="product_photos">Ürüne Ait Birkaç Fotoğraf Koy</string>
+    <string name="product_status">Kullanım Durumu</string>
+    <string name="product_description_hint">Ürünü birkaç cümle ile anlatın. Örn: Sadece iki kere giyildi. M beden uyumlu gibi..</string>
+    <string name="product_prize_hint">Satış Fiyatı</string>
+    <string name="product_photo_count">Maksimum 3 Adet Fotoğraf Konulabilir</string>
+    <string name="edit">Düzenle</string>
+    <string name="save_changes">Değişiklikleri Kaydet</string>
+    <string name="location">Lütfen Konumunuzu Giriniz.</string>
+    <string name="save">Kaydet</string>
+    <string name="approval">Onayladım</string>
+    <string name="verify_message">Mailinize gelen kodu onaylayınız.</string>
+    <string name="google_map_api_key">AIzaSyDwgx2quHjIRfDCf_rSyO6Dvn1bfzp3OqI</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">MapsActivity</string>
+
+</resources>

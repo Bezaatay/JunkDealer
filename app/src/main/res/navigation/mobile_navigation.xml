@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.kotlinegitim.myapplicationmt3.ui.profile.ProfileFragment"
+        android:label="fragment_notifications"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_personelInfosFragment"
+            app:destination="@id/personelInfosFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_sell"
+        android:name="com.kotlinegitim.myapplicationmt3.ui.sell.SellFragment"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_sell" />
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.kotlinegitim.myapplicationmt3.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/personelInfosFragment"
+        android:name="com.kotlinegitim.myapplicationmt3.ui.personelInfos.PersonelInfosFragment"
+        android:label="fragment_personel_infos"
+        tools:layout="@layout/fragment_personel_infos" >
+        <action
+            android:id="@+id/action_personelInfosFragment_to_editProfileInfosFragment"
+            app:destination="@id/editProfileInfosFragment"
+            app:enterAnim="@android:anim/fade_in" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.kotlinegitim.myapplicationmt3.ui.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/editProfileInfosFragment"
+        android:name="com.kotlinegitim.myapplicationmt3.ui.EditProfileInfos.EditProfileInfosFragment"
+        android:label="fragment_edit_profile_infos"
+        tools:layout="@layout/fragment_edit_profile_infos" >
+        <action
+            android:id="@+id/action_editProfileInfosFragment_to_personelInfosFragment"
+            app:destination="@id/personelInfosFragment" />
+    </fragment>
+
+</navigation>
