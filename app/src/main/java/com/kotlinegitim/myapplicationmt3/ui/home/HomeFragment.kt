@@ -46,21 +46,21 @@ class HomeFragment : Fragment() {
 
         recyclerView = binding.RecyclerViewID
 
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+     /*   binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
-                TODO("Not yet implemented")
+
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                TODO("Not yet implemented")
-            }
-        })
 
-        loadItems()
+            }
+        })*/
+
+        loadAllItems()
         return root
     }
 
-    private fun loadItems() {
+    private fun loadAllItems() {
         db.collection("products").get()
             .addOnSuccessListener { documents ->
                 for (document in documents)  {
@@ -81,6 +81,28 @@ class HomeFragment : Fragment() {
                 // Hata durumu
                  }
             }
+
+    private fun loadNearItems() {
+        db.collection("products").get()
+            .addOnSuccessListener { documents ->
+                for (document in documents)  {
+                    val productUrl = document.getString("Product-Url")
+                    val productPrize = document.getString("Product-Prize")
+
+                    if (productPrize != null && productUrl != null) {
+                        items.add(HomeDataClass(productUrl,productPrize))
+                    }
+                }
+                productAdapter = ProductAdapter(requireActivity(), items)
+                val layoutManager: RecyclerView.LayoutManager = GridLayoutManager(requireContext(), 2)
+
+                recyclerView!!.layoutManager = layoutManager
+                recyclerView!!.adapter = productAdapter
+            }
+            .addOnFailureListener { exception ->
+                // Hata durumu
+            }
+    }
 
     override fun onDestroy() {
         super.onDestroy()

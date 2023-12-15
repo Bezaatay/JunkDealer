@@ -48,8 +48,7 @@ class PersonelInfosFragment : Fragment() {
     ): View {
         personelInfosViewModel = ViewModelProvider(this,
             ViewModelProvider.AndroidViewModelFactory(requireActivity().application)
-        )
-            .get(PersonelInfosViewModel::class.java)
+        )[PersonelInfosViewModel::class.java]
 
         _binding = FragmentPersonelInfosBinding.inflate(inflater, container, false)
         auth = FirebaseAuth.getInstance()

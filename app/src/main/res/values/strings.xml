@@ -36,6 +36,8 @@
     <string name="save_changes">Değişiklikleri Kaydet</string>
     <string name="location">Lütfen Konumunuzu Giriniz.</string>
     <string name="save">Kaydet</string>
+    <string name="all">Tümü</string>
+    <string name="near">Yakınımdakiler</string>
     <string name="approval">Onayladım</string>
     <string name="verify_message">Mailinize gelen kodu onaylayınız.</string>
     <string name="google_map_api_key">AIzaSyDwgx2quHjIRfDCf_rSyO6Dvn1bfzp3OqI</string>

@@ -2,6 +2,7 @@ package com.kotlinegitim.myapplicationmt3.ui.sell
 
 import android.net.Uri
 import android.util.Log
+import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -16,6 +17,30 @@ class SellViewModel : ViewModel() {
     val db = FirebaseFirestore.getInstance()
     val currentUserUid = firebaseAuth.currentUser?.uid
     val storageRef = FirebaseStorage.getInstance().reference
+
+
+    fun getLocation(latitudeValue: TextView, longitudeValue: TextView) {
+        if(currentUserUid != null) {
+            db.collection("users").document(currentUserUid).collection("location").document(currentUserUid+"location")
+                .get().addOnSuccessListener { documentSnapshot ->
+                    val latitude = documentSnapshot.getDouble("latitude")
+                    val longitude = documentSnapshot.getDouble("longitude")
+
+                    if (latitude != null && longitude != null) {
+                      latitudeValue.text= latitude.toString()
+                        longitudeValue.text= longitude.toString()
+                    }
+                    else {
+                        // Eğer latitude veya longitude değeri null ise, hatayı log'a yazabilirsiniz
+                        Log.e("PersonelInfosViewModel", "Latitude veya longitude değeri null.")
+                    }
+                }
+        }
+    }
+
+    fun SetLocation(){
+
+    }
 
     // Seçilen görseli Firebase Storage'a kaydetme
    fun UploadUrl(selectedImageUri: Uri?, ProductInfos: String, ProductDescription: String, ProductPrize: String) {

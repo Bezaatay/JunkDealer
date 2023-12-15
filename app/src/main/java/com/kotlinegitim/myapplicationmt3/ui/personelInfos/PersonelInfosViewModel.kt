@@ -24,7 +24,6 @@ class PersonelInfosViewModel : ViewModel() {
    private val _locationLiveData = MutableLiveData<LatLng>()
    val locationLiveData: LiveData<LatLng> get() = _locationLiveData
 
-
    fun getInformations(usernamehint: TextView,mailhint: TextView,passwordhint: TextView){
       if (currentUserUid != null) {
          db.collection("users")

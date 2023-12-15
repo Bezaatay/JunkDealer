@@ -9,7 +9,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +29,7 @@ class SellFragment : Fragment() {
     private val ListOfProducts = ArrayList<String>()
     private lateinit var dataAdapter : ArrayAdapter<String>
 
+
     // Kullanıcıya galeriye erişim izni istemek için izin kodu
     private val READ_EXTERNAL_STORAGE_PERMISSION = 123
     private val PICK_IMAGE_REQUEST = 123
@@ -46,23 +46,40 @@ class SellFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         ListOfProducts.add("Ayakkabı")
+        ListOfProducts.add("Kazak")
+        ListOfProducts.add("Pantolon")
+        ListOfProducts.add("Şapka")
         ListOfProducts.add("Buzdolabı")
+        ListOfProducts.add("Fırın")
+        ListOfProducts.add("Çamaşır Makinesi")
+        ListOfProducts.add("Saç Kurutma Makinesi")
 
         dataAdapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,android.R.id.text1,ListOfProducts)
 
         binding.spinner.adapter = dataAdapter
 
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            //tıkladıktan sonra kaydeden kodu yaz
 
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val product_info = ListOfProducts[p2]
+               binding.textView11.text = product_info
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
         }
 
+        sellViewModel.getLocation(binding.latitudeValue,binding.longitudeValue)
+
         binding.UploadProductBtn.setOnClickListener {
-            val ProductInfos= binding.editTextProductInfos.text.toString()
+            val ProductInfos=binding.textView11.text.toString()
             val ProductDescription= binding.editTextProductDescription.text.toString()
             val ProductPrize= binding.editTextProductPrize.text.toString()
+            val ProductLocationLatitude=binding.latitudeValue.text.toString()
+            val ProductLocationLongitude=binding.longitudeValue.text.toString()
 
             sellViewModel.UploadUrl(selectedImageUri,ProductInfos,ProductDescription,ProductPrize)
+            sellViewModel.SetLocation()
 
         }
         binding.imageViewAddPhoto1.setOnClickListener {
