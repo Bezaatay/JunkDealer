@@ -14,7 +14,16 @@ class ProfileViewModel : ViewModel() {
     }
     val db = FirebaseFirestore.getInstance()
 
-
+    fun getMoney(coin: TextView) {
+        val currentUserUid=firebaseAuth.currentUser?.uid
+        if (currentUserUid != null) {
+            db.collection("users").document(currentUserUid).collection("money").document(currentUserUid+"money")
+                .get().addOnSuccessListener {
+                    val money = it.getDouble("money")
+                    coin.text = money.toString()+"TL"
+                }
+        }
+    }
     fun getUsername(usernametext: TextView){
         val currentUserUid=firebaseAuth.currentUser?.uid
         if (currentUserUid != null) {

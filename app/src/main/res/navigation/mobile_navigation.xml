@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navigation_profile_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_myPurseFragment"
+            app:destination="@id/myPurseFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_sell"
@@ -50,6 +53,15 @@
         <action
             android:id="@+id/action_editProfileInfosFragment_to_personelInfosFragment"
             app:destination="@id/personelInfosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPurseFragment"
+        android:name="com.kotlinegitim.myapplicationmt3.ui.myPurse.MyPurseFragment"
+        android:label="fragment_my_purse"
+        tools:layout="@layout/fragment_my_purse" >
+        <action
+            android:id="@+id/action_myPurseFragment_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
     </fragment>
 
 </navigation>

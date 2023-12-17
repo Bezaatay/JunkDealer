@@ -22,6 +22,11 @@
     <string name="change_password">Şifremi Güncelle</string>
     <string name="change_location">Konumumu Güncelle</string>
     <string name="purchases">Aldıklarım</string>
+    <string name="shopping">Alışverişlerim</string>
+    <string name="myPurse">Cüzdanım</string>
+    <string name="tl_hint">-- TL</string>
+    <string name="load_money">Yüklemek İstediğiniz Tutarı Giriniz</string>
+    <string name="load">Yükle</string>
     <string name="upload_product">Satışa Koy</string>
     <string name="product_infos">Ürün Bilgilerini Gir</string>
     <string name="product_description">Açıklama</string>

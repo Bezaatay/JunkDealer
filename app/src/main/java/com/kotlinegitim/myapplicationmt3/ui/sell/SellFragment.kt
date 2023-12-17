@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +47,7 @@ class SellFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         ListOfProducts.add("Ayakkabı")
+        ListOfProducts.add("Pijama")
         ListOfProducts.add("Kazak")
         ListOfProducts.add("Pantolon")
         ListOfProducts.add("Şapka")
@@ -77,9 +79,14 @@ class SellFragment : Fragment() {
             val ProductPrize= binding.editTextProductPrize.text.toString()
             val ProductLocationLatitude=binding.latitudeValue.text.toString()
             val ProductLocationLongitude=binding.longitudeValue.text.toString()
+            Log.e("location","$ProductLocationLatitude,$ProductLocationLongitude")
 
-            sellViewModel.UploadUrl(selectedImageUri,ProductInfos,ProductDescription,ProductPrize)
-            sellViewModel.SetLocation()
+            sellViewModel.UploadUrl(selectedImageUri,
+                ProductInfos,
+                ProductDescription,
+                ProductPrize,
+                ProductLocationLatitude,
+                ProductLocationLongitude)
 
         }
         binding.imageViewAddPhoto1.setOnClickListener {

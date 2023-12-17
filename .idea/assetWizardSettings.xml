@@ -321,8 +321,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="bdbbbb" />
-                            <entry key="outputName" value="edit_icon" />
-                            <entry key="sourceFile" value="C:\Kotlin_icons\edit.svg" />
+                            <entry key="outputName" value="coins" />
+                            <entry key="sourceFile" value="C:\Kotlin_icons\coins.svg" />
                           </map>
                         </option>
                       </PersistentState>

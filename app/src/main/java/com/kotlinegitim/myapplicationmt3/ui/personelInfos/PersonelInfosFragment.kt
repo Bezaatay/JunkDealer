@@ -25,6 +25,7 @@ class PersonelInfosFragment : Fragment() {
 
     private lateinit var _binding : FragmentPersonelInfosBinding
     private lateinit var personelInfosViewModel : PersonelInfosViewModel
+
     private lateinit var auth : FirebaseAuth
     val storage = Firebase.storage
 
@@ -34,14 +35,13 @@ class PersonelInfosFragment : Fragment() {
 
         personelInfosViewModel.locationLiveData.observe(viewLifecycleOwner){
             if (it != null) {
-                // LiveData'dan alınan LatLng değerini kullanarak işlemlerinizi gerçekleştirin
+
                 val MyHome = it
                 googleMap.addMarker(MarkerOptions().position(MyHome).title("Home"))
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MyHome,17f))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MyHome,10f))
             }
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,30 +53,28 @@ class PersonelInfosFragment : Fragment() {
         _binding = FragmentPersonelInfosBinding.inflate(inflater, container, false)
         auth = FirebaseAuth.getInstance()
 
-        val root: View = binding.root
-
         personelInfosViewModel.getInformations(binding.editTextusername,binding.editTextMail,binding.editTextpassword)
         personelInfosViewModel.getLocation()
 
-        val  currentUser = auth.currentUser
+        val currentUser = auth.currentUser
         val storageRef = storage.reference
 
-            val email = currentUser?.email
-            val profileImageView: ImageView = binding.imageViewProfilePhoto
+        val email = currentUser?.email
+        val profileImageView: ImageView = binding.imageViewProfilePhoto
 
-            storageRef.child("users/$email/profile.jpg").downloadUrl.addOnSuccessListener { uri ->
+        storageRef.child("users/$email/profile.jpg").downloadUrl.addOnSuccessListener { uri ->
                 // Glide ile URL'yi ImageView'e yükle
-                Glide.with(this).load(uri).into(profileImageView)
+            Glide.with(this).load(uri).into(profileImageView)
+        }
+            .addOnFailureListener { exception ->
+                Log.e("GlideError", "Fotoğraf yüklenirken hata oluştu: ${exception.message}")
             }
-                .addOnFailureListener { exception ->
-                    Log.e("GlideError", "Fotoğraf yüklenirken hata oluştu: ${exception.message}")
-                }
 
         binding.imageViewEdit.setOnClickListener {
             findNavController().navigate(R.id.action_personelInfosFragment_to_editProfileInfosFragment)
         }
 
-        return root
+        return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

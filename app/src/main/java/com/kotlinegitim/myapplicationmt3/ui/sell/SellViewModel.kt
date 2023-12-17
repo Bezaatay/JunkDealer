@@ -38,12 +38,15 @@ class SellViewModel : ViewModel() {
         }
     }
 
-    fun SetLocation(){
-
-    }
-
     // Seçilen görseli Firebase Storage'a kaydetme
-   fun UploadUrl(selectedImageUri: Uri?, ProductInfos: String, ProductDescription: String, ProductPrize: String) {
+   fun UploadUrl(
+        selectedImageUri: Uri?,
+        ProductInfos: String,
+        ProductDescription: String,
+        ProductPrize: String,
+        ProductLocationLatitude: String,
+        ProductLocationLongitude: String,
+    ) {
         if(selectedImageUri != null) {
 
             val user = FirebaseAuth.getInstance().currentUser
@@ -54,7 +57,7 @@ class SellViewModel : ViewModel() {
                 val dowlandImageRef = imageRef
                 dowlandImageRef.downloadUrl.addOnSuccessListener { uri ->
                     val downloadUrl = uri.toString()
-                    UploadProduct(ProductInfos,ProductDescription,ProductPrize,downloadUrl)
+                    UploadProduct(ProductInfos,ProductDescription,ProductPrize,downloadUrl,ProductLocationLatitude,ProductLocationLongitude)
                 }.addOnFailureListener {
                     Log.e("hata url1-SellVM",it.toString())
                 }
@@ -62,14 +65,25 @@ class SellViewModel : ViewModel() {
                 Log.e("hata url2-SellVM",exception.toString())
             }
         }
+        Log.e("dfgd","$selectedImageUri")
    }
 
-    fun UploadProduct(ProductInfos:String, ProductDescription:String, ProductPrize:String,ProductUrl:String){
+    fun UploadProduct(
+        ProductInfos: String,
+        ProductDescription: String,
+        ProductPrize: String,
+        ProductUrl: String,
+        ProductLocationLatitude: String,
+        ProductLocationLongitude: String
+    ){
         var productMap = hashMapOf(
             "Product-Info" to ProductInfos,
             "Product-Description" to ProductDescription,
             "Product-Prize" to ProductPrize+"TL",
-            "Product-Url" to ProductUrl
+            "Product-Url" to ProductUrl,
+            "Product-Latitude" to ProductLocationLatitude,
+            "Product-Longitude" to ProductLocationLongitude
+
         )
         if (currentUserUid != null) {
             db.collection("products").document().set(productMap)
@@ -90,6 +104,5 @@ class SellViewModel : ViewModel() {
             "Product-Url" to ProductUrl
         )
         db.collection("users").document(currentUser).collection("ProductsIUpload").add(userProductMap)
-
     }
 }

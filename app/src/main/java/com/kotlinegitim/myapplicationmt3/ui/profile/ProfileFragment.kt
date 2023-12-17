@@ -111,6 +111,7 @@ class ProfileFragment() : Fragment() {
         val root: View = binding.root
 
         profileViewModel.getUsername(binding.usernameID)
+        profileViewModel.getMoney(binding.myPurse)
 
         binding.logoutID.setOnClickListener {
             auth.signOut()
@@ -124,6 +125,13 @@ class ProfileFragment() : Fragment() {
         binding.settingsID.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_profile_to_settingsFragment)
         }
+        binding.myPurse.setOnClickListener {
+            findNavController().navigate(R.id. action_navigation_profile_to_myPurseFragment)
+        }
+        binding.myPurseView.setOnClickListener {
+            findNavController().navigate(R.id. action_navigation_profile_to_myPurseFragment)
+        }
+
 
         //önceden profil potoğrafı yüklenmişse glide ile fotoğrafı getirme
         val email = currentUser?.email
