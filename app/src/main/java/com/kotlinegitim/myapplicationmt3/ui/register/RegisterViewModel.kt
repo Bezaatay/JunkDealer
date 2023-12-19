@@ -73,6 +73,7 @@ class RegisterViewModel : ViewModel() {
                 Log.e("firestora database","firestore db unsuccessfull")
             }
     }
+
     fun passwordController(password:String,comfirmpassword:String){
         if (password==comfirmpassword){
             Log.e("şifre","eşleşti")

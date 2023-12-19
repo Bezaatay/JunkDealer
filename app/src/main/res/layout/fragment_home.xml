@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,34 +12,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RecyclerViewID"
-        android:layout_width="396dp"
-        android:layout_height="614dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nearProducts" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RecyclerViewID"
+            android:layout_width="396dp"
+            android:layout_height="614dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.454"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nearProducts" />
 
-        <SearchView
+        <EditText
             android:id="@+id/searchView"
-            android:layout_width="370dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/search_bar_background"
-            android:iconifiedByDefault="false"
-            android:queryHint="@string/search_bar_hint"
+            android:hint="@string/search_bar_hint"
+            android:paddingLeft="50dp"
+            app:iconifiedByDefault="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:queryBackground="@android:color/transparent"
+            app:queryHint="@string/search_bar_hint" />
+
 
         <TextView
             android:id="@+id/allProducts"
             android:layout_width="60dp"
             android:layout_height="23dp"
             android:layout_marginStart="1dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/search_bar_background"
             android:text="@string/all"
             android:textAlignment="center"
@@ -53,7 +57,7 @@
             android:layout_width="120dp"
             android:layout_height="23dp"
             android:layout_marginStart="11dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="210dp"
             android:background="@drawable/search_bar_background"
             android:text="@string/near"
@@ -61,6 +65,30 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/allProducts"
             app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+        <ImageView
+            android:id="@+id/searchBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/baseline_search_24"
+            app:layout_constraintBottom_toBottomOf="@+id/searchView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/kmEdittext"
+            android:layout_width="68dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="125dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@+id/RecyclerViewID"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/nearProducts" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

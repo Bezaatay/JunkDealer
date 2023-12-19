@@ -1,0 +1,7 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Arka plan rengini burada ayarlamayın, yani solid özelliğini kaldırın -->
+    <corners android:radius="15dp" /> <!-- Kenar yuvarlatma miktarını belirleyin -->
+    <stroke
+        android:color="#FFFFFF"
+        android:width="5dp" />
+</shape>

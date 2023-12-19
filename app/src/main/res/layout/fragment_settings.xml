@@ -6,28 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.settings.SettingsFragment">
 
-    <TextView
-        android:id="@+id/changeLocation"
-        android:layout_width="381dp"
-        android:layout_height="65dp"
-        android:background="@drawable/edit_text_background"
-        android:gravity="center_vertical"
-        android:paddingLeft="15sp"
-        android:text="@string/change_location"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="75dp" />
-
-    <TextView
-        android:id="@+id/changePassword"
-        android:layout_width="381dp"
-        android:layout_height="65dp"
-        android:background="@drawable/edit_text_background"
-        android:gravity="center_vertical"
-        android:paddingLeft="15sp"
-        android:text="@string/change_password"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="153dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -79,9 +79,10 @@
 
     <ImageView
         android:id="@+id/imageViewProfilePhoto"
-        android:layout_width="137dp"
-        android:layout_height="152dp"
-        android:layout_marginTop="50dp"
+        android:layout_width="144dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/profile_photo_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

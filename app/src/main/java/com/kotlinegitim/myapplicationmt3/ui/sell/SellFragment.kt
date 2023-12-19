@@ -1,6 +1,7 @@
 package com.kotlinegitim.myapplicationmt3.ui.sell
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -17,7 +18,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.kotlinegitim.myapplicationmt3.R
 import com.kotlinegitim.myapplicationmt3.databinding.FragmentSellBinding
 
 class SellFragment : Fragment() {
@@ -36,6 +39,14 @@ class SellFragment : Fragment() {
     private val PICK_IMAGE_REQUEST = 123
     private val binding get() = _binding
 
+    private fun showConfirmationDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Onay")
+            .setMessage("Ürün başarılı şekilde yüklendi.")
+            .show()
+        findNavController().navigate(R.id.action_navigation_sell_to_navigation_home)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         sellViewModel = ViewModelProvider(
             this,
@@ -46,15 +57,21 @@ class SellFragment : Fragment() {
 
         auth = FirebaseAuth.getInstance()
 
-        ListOfProducts.add("Ayakkabı")
-        ListOfProducts.add("Pijama")
-        ListOfProducts.add("Kazak")
-        ListOfProducts.add("Pantolon")
-        ListOfProducts.add("Şapka")
-        ListOfProducts.add("Buzdolabı")
-        ListOfProducts.add("Fırın")
-        ListOfProducts.add("Çamaşır Makinesi")
-        ListOfProducts.add("Saç Kurutma Makinesi")
+        sellViewModel._isUpload.observe(viewLifecycleOwner) {
+            if (it) {
+               showConfirmationDialog()
+            }
+        }
+
+        ListOfProducts.add("ayakkabi")
+        ListOfProducts.add("pijama")
+        ListOfProducts.add("kazak")
+        ListOfProducts.add("pantolon")
+        ListOfProducts.add("sapka")
+        ListOfProducts.add("buzdolabi")
+        ListOfProducts.add("firin")
+        ListOfProducts.add("camasir makinesi")
+        ListOfProducts.add("sac kurutma makinesi")
 
         dataAdapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,android.R.id.text1,ListOfProducts)
 
@@ -63,8 +80,8 @@ class SellFragment : Fragment() {
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                val product_info = ListOfProducts[p2]
-               binding.textView11.text = product_info
+                val product_categories = ListOfProducts[p2]
+               binding.textView11.text = product_categories
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -74,21 +91,20 @@ class SellFragment : Fragment() {
         sellViewModel.getLocation(binding.latitudeValue,binding.longitudeValue)
 
         binding.UploadProductBtn.setOnClickListener {
-            val ProductInfos=binding.textView11.text.toString()
+            val ProductCategories=binding.textView11.text.toString()
             val ProductDescription= binding.editTextProductDescription.text.toString()
             val ProductPrize= binding.editTextProductPrize.text.toString()
             val ProductLocationLatitude=binding.latitudeValue.text.toString()
             val ProductLocationLongitude=binding.longitudeValue.text.toString()
-            Log.e("location","$ProductLocationLatitude,$ProductLocationLongitude")
 
             sellViewModel.UploadUrl(selectedImageUri,
-                ProductInfos,
+                ProductCategories,
                 ProductDescription,
                 ProductPrize,
                 ProductLocationLatitude,
                 ProductLocationLongitude)
-
         }
+
         binding.imageViewAddPhoto1.setOnClickListener {
             openGallery()
         }
@@ -124,6 +140,7 @@ class SellFragment : Fragment() {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
             selectedImageUri = data.data
+            Log.e("uri","$selectedImageUri")
 
             if(selectedImageUri != null){
 

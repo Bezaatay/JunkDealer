@@ -27,6 +27,7 @@
     <string name="tl_hint">-- TL</string>
     <string name="load_money">Yüklemek İstediğiniz Tutarı Giriniz</string>
     <string name="load">Yükle</string>
+    <string name="buy">Satın Al</string>
     <string name="upload_product">Satışa Koy</string>
     <string name="product_infos">Ürün Bilgilerini Gir</string>
     <string name="product_description">Açıklama</string>

@@ -30,12 +30,6 @@ class SettingsFragment : Fragment() {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.changeLocation.setOnClickListener {
-           // findNavController().navigate(R.id.)
-        }
-        binding.changePassword.setOnClickListener {
-
-        }
 
         return root
     }

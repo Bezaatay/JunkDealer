@@ -127,7 +127,7 @@
     <TextView
         android:id="@+id/usernameID"
         android:layout_width="186dp"
-        android:layout_height="46dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:fontFamily="casual"
         android:gravity="center_horizontal"
@@ -142,11 +142,14 @@
         android:id="@+id/imageView"
         android:layout_width="144dp"
         android:layout_height="140dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/profile_photo_background"
+        android:padding="5dp"
+        android:scaleType="centerCrop"
         tools:src="@tools:sample/avatars" />
 
     <ImageView

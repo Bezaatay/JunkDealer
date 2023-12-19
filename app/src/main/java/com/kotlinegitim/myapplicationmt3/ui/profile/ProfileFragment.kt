@@ -111,7 +111,7 @@ class ProfileFragment() : Fragment() {
         val root: View = binding.root
 
         profileViewModel.getUsername(binding.usernameID)
-        profileViewModel.getMoney(binding.myPurse)
+       //profileViewModel.getMoney(binding.myPurse)
 
         binding.logoutID.setOnClickListener {
             auth.signOut()
