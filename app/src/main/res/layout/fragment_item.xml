@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/page_background"
     android:padding="5dp"
-    tools:context=".Item.ItemFragment">
+    tools:context=".ui.Item.ItemFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,22 +15,123 @@
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="197dp"
-            android:layout_height="60dp"
+            android:layout_width="253dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="10dp"
             android:text="@string/buy"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemRecyclerViewID" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/itemRecyclerViewID"
-            android:layout_width="400dp"
-            android:layout_height="612dp"
-            android:layout_marginTop="12dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout5"
+            android:layout_width="409dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.428"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView" />
+            app:layout_constraintTop_toBottomOf="@+id/searchView">
+
+            <fragment
+                android:id="@+id/mapView"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="370dp"
+                android:layout_height="102dp"
+                android:layout_marginStart="17dp"
+                android:layout_marginEnd="23dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/product_photo"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/seller_photo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                app:layout_constraintBottom_toTopOf="@+id/mapView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/product_description"
+                app:layout_constraintVertical_bias="0.0"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/seller_username"
+                android:layout_width="295dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="31dp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintBottom_toTopOf="@+id/mapView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/seller_photo" />
+
+            <TextView
+                android:id="@+id/product_categories"
+                android:layout_width="350dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="24dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.559"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/product_photo" />
+
+            <TextView
+                android:id="@+id/product_description"
+                android:layout_width="260dp"
+                android:layout_height="83dp"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="21dp"
+                android:textColor="@color/light_grey"
+                android:textSize="18sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toStartOf="@+id/product_prize"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/product_categories" />
+
+            <TextView
+                android:id="@+id/product_prize"
+                android:layout_width="89dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="26dp"
+                android:layout_marginEnd="24dp"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/product_categories" />
+
+            <ImageView
+                android:id="@+id/imageViewHeart"
+                android:layout_width="38dp"
+                android:layout_height="42dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/product_categories"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/product_photo"
+                app:layout_constraintVertical_bias="0.687"
+                app:srcCompat="@drawable/hollowheart" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <EditText
             android:id="@+id/searchView"
@@ -40,6 +141,7 @@
             android:background="@drawable/search_bar_background"
             android:hint="@string/search_bar_hint"
             android:paddingLeft="50dp"
+            android:visibility="visible"
             app:iconifiedByDefault="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -70,29 +172,28 @@
 
         <TextView
             android:id="@+id/urltxt"
-            android:layout_width="146dp"
-            android:layout_height="55dp"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/itemRecyclerViewID"
-            tools:layout_editor_absoluteY="148dp" />
+            tools:layout_editor_absoluteY="60dp" />
 
         <TextView
-            android:id="@+id/prizetxt"
-            android:layout_width="146dp"
-            android:layout_height="55dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="@+id/itemRecyclerViewID"
-            tools:layout_editor_absoluteY="241dp" />
+            android:id="@+id/latitudetxt"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:text="TextView"
+            android:visibility="invisible"
+            tools:layout_editor_absoluteX="342dp"
+            tools:layout_editor_absoluteY="879dp" />
 
         <TextView
-            android:id="@+id/categorytxt"
-            android:layout_width="146dp"
-            android:layout_height="55dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="@+id/itemRecyclerViewID"
-            tools:layout_editor_absoluteY="348dp" />
+            android:id="@+id/longitudetxt"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:text="TextView"
+            android:visibility="invisible"
+            tools:layout_editor_absoluteX="342dp"
+            tools:layout_editor_absoluteY="879dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

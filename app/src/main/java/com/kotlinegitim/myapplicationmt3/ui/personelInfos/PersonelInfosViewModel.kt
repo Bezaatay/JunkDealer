@@ -1,7 +1,6 @@
 package com.kotlinegitim.myapplicationmt3.ui.personelInfos
 
 import android.util.Log
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,7 +19,7 @@ class PersonelInfosViewModel : ViewModel() {
    private val _locationLiveData = MutableLiveData<LatLng>()
    val locationLiveData: LiveData<LatLng> get() = _locationLiveData
 
-   fun getInformations(usernamehint: TextView,mailhint: TextView,passwordhint: TextView){
+   fun getInformations(usernameHint: TextView, mailHint: TextView, passwordHint: TextView){
       if (currentUserUid != null) {
          db.collection("users")
             .document(currentUserUid)
@@ -30,9 +29,9 @@ class PersonelInfosViewModel : ViewModel() {
                   val email = document.getString("email")
                   val username = document.getString("username")
                   val password = document.getString("password")
-                  mailhint.hint=email.toString()
-                  usernamehint.hint=username.toString()
-                  passwordhint.hint=password.toString()
+                  mailHint.hint=email.toString()
+                  usernameHint.hint=username.toString()
+                  passwordHint.hint=password.toString()
                   if (username != null || email != null) {
                      // Kullanıcı adını kullanarak işlemlerinizi gerçekleştirin
                      println("Current username: $username")

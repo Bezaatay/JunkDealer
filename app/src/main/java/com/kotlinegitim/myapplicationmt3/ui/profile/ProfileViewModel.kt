@@ -10,44 +10,40 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class ProfileViewModel : ViewModel() {
 
+    var _isPurseAccount : MutableLiveData<Boolean> = MutableLiveData(false)
+
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
     private val db = FirebaseFirestore.getInstance()
+    private val uid = firebaseAuth.currentUser?.uid.toString()
 
-    private fun setMoney(uid: String) {
+    fun createMoneyDb() {
+
         val userDocRef = uid.let { db.collection("users").document(it) }
+        val moneyCollectionRef = userDocRef.collection("money")
 
-        // "money" koleksiyonunu oluşturun veya varsa alın
-        val moneyCollectionRef = userDocRef.collection("money").document(uid + "money")
-
-        val moneyValues = hashMapOf(
-            "money" to "0 TL"
-        )
-        moneyCollectionRef.set(moneyValues)
-            ?.addOnSuccessListener {
-                Log.e("success", "money depolama basairili")
+        moneyCollectionRef.document(uid + "money").set(mapOf("money" to 0.0))
+            .addOnSuccessListener {
+                Log.e("success", "money depolama basarili")
+                if (it != null) {
+                    _isPurseAccount.value = true
+                }
             }
-            ?.addOnFailureListener {
+            .addOnFailureListener {
                 Log.e("success", "money depolama basarisiz")
             }
     }
-
     fun getMoney(coin: TextView) {
-        val currentUserUid = firebaseAuth.currentUser?.uid
-        if (currentUserUid != null) {
-            db.collection("users").document(currentUserUid).collection("money")
-                .document(currentUserUid + "money")
+        if (uid != null) {
+            db.collection("users").document(uid).collection("money").document(uid+"money")
                 .get().addOnSuccessListener {
                     val money = it.getDouble("money")
-                    if (money != null) {
-                        coin.text = money.toString() + "TL"
-                    } else {
-                        Log.e("getmoney profile viewmodel", "money bos")
-                    }
-
-        }}}
-        fun getUsername(usernametext: TextView) {
+                    coin.text = money.toString()+"TL"
+                }
+        }
+    }
+    fun getUsername(usernametext: TextView) {
             val currentUserUid = firebaseAuth.currentUser?.uid
             if (currentUserUid != null) {
                 db.collection("users")

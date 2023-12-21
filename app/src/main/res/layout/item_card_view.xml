@@ -20,6 +20,16 @@
              android:layout_width="match_parent"
              android:layout_height="wrap_content">
 
+             <fragment
+                 android:id="@+id/mapView"
+                 android:name="com.google.android.gms.maps.SupportMapFragment"
+                 android:layout_width="369dp"
+                 android:layout_height="74dp"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 app:layout_constraintHorizontal_bias="0.5"
+                 app:layout_constraintStart_toStartOf="parent" />
+
              <ImageView
                  android:id="@+id/product_photo"
                  android:layout_width="350dp"
@@ -35,8 +45,9 @@
                  android:layout_width="50dp"
                  android:layout_height="50dp"
                  android:layout_marginStart="26dp"
-                 android:layout_marginTop="34dp"
-                 app:layout_constraintBottom_toBottomOf="parent"
+                 android:layout_marginTop="29dp"
+                 android:layout_marginBottom="15dp"
+                 app:layout_constraintBottom_toTopOf="@+id/mapView"
                  app:layout_constraintStart_toStartOf="parent"
                  app:layout_constraintTop_toBottomOf="@+id/product_description"
                  tools:srcCompat="@tools:sample/avatars" />
@@ -45,9 +56,10 @@
                  android:id="@+id/seller_username"
                  android:layout_width="215dp"
                  android:layout_height="24dp"
-                 android:layout_marginStart="8dp"
-                 android:layout_marginEnd="103dp"
-                 app:layout_constraintBottom_toBottomOf="parent"
+                 android:layout_marginStart="11dp"
+                 android:layout_marginEnd="100dp"
+                 android:layout_marginBottom="15dp"
+                 app:layout_constraintBottom_toTopOf="@+id/mapView"
                  app:layout_constraintEnd_toEndOf="parent"
                  app:layout_constraintStart_toEndOf="@+id/seller_photo" />
 
@@ -99,7 +111,6 @@
                  app:layout_constraintEnd_toEndOf="parent"
                  app:layout_constraintTop_toBottomOf="@+id/product_photo"
                  app:srcCompat="@drawable/hollowheart" />
-
 
          </androidx.constraintlayout.widget.ConstraintLayout>
      </LinearLayout>

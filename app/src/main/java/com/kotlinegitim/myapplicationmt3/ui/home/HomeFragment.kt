@@ -126,22 +126,20 @@ class HomeFragment : Fragment(), ProductAdapter.OnItemClickListener {
     }
     private fun loadNearItems() {
         items.clear()
-        //val enterKm = binding.kmEdittext.text.toString().toDouble()
-        //Log.e("enterKm=","$enterKm")
 
         val currentUserUid = auth.currentUser?.uid
         if (currentUserUid != null) {
             db.collection("users").document(currentUserUid).collection("location")
                 .document(currentUserUid + "location")
                 .get().addOnSuccessListener { documentSnapshot ->
-                    val userlatitude = documentSnapshot.getDouble("latitude")
-                    val userlongitude = documentSnapshot.getDouble("longitude")
+                    val userLatitude = documentSnapshot.getDouble("latitude")
+                    val userLongitude = documentSnapshot.getDouble("longitude")
 
                     db.collection("products").get()
                         .addOnSuccessListener { documents ->
                             for (document in documents) {
-                                val productlatitude = document.getDouble("Product-Latitude")
-                                val productlongitude = document.getDouble("Product-Longitude")
+                                val productLatitude = document.getDouble("Product-Latitude")
+                                val productLongitude = document.getDouble("Product-Longitude")
 
                                 fun calculateDistance(
                                     userLatitude: Double,
@@ -162,7 +160,7 @@ class HomeFragment : Fragment(), ProductAdapter.OnItemClickListener {
 
                                     return radius * c
                                 }
-                                val distance = calculateDistance(userlatitude!!, userlongitude!!, productlatitude!!, productlongitude!!)
+                                val distance = calculateDistance(userLatitude!!, userLongitude!!, productLatitude!!, productLongitude!!)
                                 Log.e("distance=","$distance")
 
                                 if(distance < 5){

@@ -73,7 +73,7 @@
     </fragment>
     <fragment
         android:id="@+id/itemFragment"
-        android:name="com.kotlinegitim.myapplicationmt3.Item.ItemFragment"
+        android:name="com.kotlinegitim.myapplicationmt3.ui.Item.ItemFragment"
         android:label="fragment_item"
         tools:layout="@layout/fragment_item" >
         <argument

@@ -117,6 +117,13 @@
                 android:visibility="invisible"
                 tools:layout_editor_absoluteX="17dp"
                 tools:layout_editor_absoluteY="153dp" />
+            <TextView
+                android:id="@+id/mailtxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                tools:layout_editor_absoluteX="17dp"
+                tools:layout_editor_absoluteY="153dp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

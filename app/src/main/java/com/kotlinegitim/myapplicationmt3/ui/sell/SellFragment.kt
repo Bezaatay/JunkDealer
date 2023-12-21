@@ -88,19 +88,22 @@ class SellFragment : Fragment() {
             }
         }
 
+        sellViewModel.getMail(binding.mailtxt)
         sellViewModel.getLocation(binding.latitudeValue,binding.longitudeValue)
 
         binding.UploadProductBtn.setOnClickListener {
             val ProductCategories=binding.textView11.text.toString()
             val ProductDescription= binding.editTextProductDescription.text.toString()
             val ProductPrize= binding.editTextProductPrize.text.toString()
+            val SellerMail = binding.mailtxt.text.toString()
             val ProductLocationLatitude=binding.latitudeValue.text.toString()
             val ProductLocationLongitude=binding.longitudeValue.text.toString()
 
-            sellViewModel.UploadUrl(selectedImageUri,
+            sellViewModel.uploadUrl(selectedImageUri,
                 ProductCategories,
                 ProductDescription,
                 ProductPrize,
+                SellerMail,
                 ProductLocationLatitude,
                 ProductLocationLongitude)
         }

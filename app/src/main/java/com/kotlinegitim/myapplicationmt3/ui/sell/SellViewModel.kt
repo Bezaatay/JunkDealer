@@ -40,14 +40,40 @@ class SellViewModel : ViewModel() {
         }
     }
 
+    fun getMail(mailTxt: TextView) {
+            val currentUserUid = firebaseAuth.currentUser?.uid
+            if (currentUserUid != null) {
+                db.collection("users")
+                    .document(currentUserUid)
+                    .get()
+                    .addOnSuccessListener { document ->
+                        if (document != null) {
+                            val email = document.getString("email")
+                            mailTxt.text = email.toString()
+                            if (email != null) {
+                                println("Current Mail: $email")
+                            }
+                        } else {
+                            println("Belirtilen UID ile ilgili belge bulunamadı.")
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        println("Firestore'dan veri alınamadı: $exception")
+                    }
+            } else {
+                println("Oturum açmış bir kullanıcı bulunamadı.")
+            }
+    }
+
     // Seçilen görseli Firebase Storage'a kaydetme
-   fun UploadUrl(
+   fun uploadUrl(
         selectedImageUri: Uri?,
-        ProductCategories: String,
-        ProductDescription: String,
-        ProductPrize: String,
-        ProductLocationLatitude: String,
-        ProductLocationLongitude: String,
+        productCategories: String,
+        productDescription: String,
+        productPrize: String,
+        sellerMail: String,
+        productLocationLatitude: String,
+        productLocationLongitude: String,
     ) {
         Log.e("uri","$selectedImageUri")
         if(selectedImageUri != null) {
@@ -56,15 +82,22 @@ class SellViewModel : ViewModel() {
             val uuid = UUID.randomUUID()
             val imageID = "${uuid}.jpg"
             val imageRef = storageRef.child("productsPhotos/${user?.email}/myProducts/$imageID")
-            imageRef.putFile(selectedImageUri).addOnSuccessListener {   task ->
-                val dowlandImageRef = imageRef
-                dowlandImageRef.downloadUrl.addOnSuccessListener { uri ->
+            imageRef.putFile(selectedImageUri).addOnSuccessListener {
+                imageRef.downloadUrl.addOnSuccessListener { uri ->
                     val downloadUrl = uri.toString()
-                    val latitude = ProductLocationLatitude.toDouble()
-                    val longitude = ProductLocationLongitude.toDouble()
-                    UploadProduct(ProductCategories,ProductDescription,ProductPrize,downloadUrl,latitude,longitude)
+                    val latitude = productLocationLatitude.toDouble()
+                    val longitude = productLocationLongitude.toDouble()
+                    uploadProduct(
+                        productCategories,
+                        productDescription,
+                        productPrize,
+                        downloadUrl,
+                        sellerMail,
+                        latitude,
+                        longitude
+                    )
                 }.addOnFailureListener {
-                    Log.e("hata url1-SellVM",it.toString())
+                    Log.e("hata url1-SellVM", it.toString())
                 }
             }.addOnFailureListener{exception ->
                 Log.e("hata url2-SellVM",exception.toString())
@@ -73,40 +106,41 @@ class SellViewModel : ViewModel() {
         Log.e("selected uri hata ","$selectedImageUri")
    }
 
-    fun UploadProduct(
-        ProductCategories: String,
-        ProductDescription: String,
-        ProductPrize: String,
-        ProductUrl: String,
-        ProductLocationLatitude: Double,
-        ProductLocationLongitude: Double
+    private fun uploadProduct(
+        productCategories: String,
+        productDescription: String,
+        productPrize: String,
+        productUrl: String,
+        sellerMail: String,
+        productLocationLatitude: Double,
+        productLocationLongitude: Double
     ){
-        var productMap = hashMapOf(
-            "Product-Categories" to ProductCategories,
-            "Product-Description" to ProductDescription,
-            "Product-Prize" to ProductPrize+"TL",
-            "Product-Url" to ProductUrl,
-            "Product-Latitude" to ProductLocationLatitude,
-            "Product-Longitude" to ProductLocationLongitude
-
-        )
+        val productMap = hashMapOf(
+            "Product-Categories" to productCategories,
+            "Product-Description" to productDescription,
+            "Product-Prize" to productPrize+"TL",
+            "Product-Url" to productUrl,
+            "Product-Latitude" to productLocationLatitude,
+            "Product-Longitude" to productLocationLongitude,
+            "Seller-Mail" to sellerMail
+         )
         if (currentUserUid != null) {
             db.collection("products").document().set(productMap)
                 .addOnSuccessListener {
-                    Log.e("firestora database","firestore db success")
+                    Log.e("products firestora database","firestore db success")
                 }.addOnFailureListener {
-                    Log.e("firestora database","firestore db unsuccessfull")
+                    Log.e("products firestora database","firestore db unsuccessfull")
                 }
-            UploadUserProduct(currentUserUid,ProductCategories, ProductDescription, ProductPrize,ProductUrl)
+            uploadUserProduct(currentUserUid,productCategories, productDescription, productPrize,productUrl)
         }
     }
 
-    fun UploadUserProduct(currentUser:String,editTextProductCategories:String, editTextProductDescription:String, editTextProductPrize:String,ProductUrl : String){
+    private fun uploadUserProduct(currentUser:String, editTextProductCategories:String, editTextProductDescription:String, editTextProductPrize:String, productUrl : String){
         val userProductMap = hashMapOf(
             "Product-Categories" to editTextProductCategories,
             "Product-Description" to editTextProductDescription,
             "Product-Prize" to editTextProductPrize+"TL",
-            "Product-Url" to ProductUrl
+            "Product-Url" to productUrl
         )
         db.collection("users").document(currentUser).collection("ProductsIUpload").add(userProductMap)
         _isUpload.value = true

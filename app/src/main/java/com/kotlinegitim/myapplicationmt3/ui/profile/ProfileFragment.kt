@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -24,6 +25,7 @@ import com.google.firebase.storage.ktx.storage
 import com.kotlinegitim.myapplicationmt3.ui.activity.LoginSigninActivity
 import com.kotlinegitim.myapplicationmt3.R
 import com.kotlinegitim.myapplicationmt3.databinding.FragmentProfileBinding
+import com.kotlinegitim.myapplicationmt3.ui.activity.MainActivity
 
 class ProfileFragment() : Fragment() {
 
@@ -34,6 +36,16 @@ class ProfileFragment() : Fragment() {
     val storage = Firebase.storage
     private lateinit var auth: FirebaseAuth
 
+    fun showConfirmationDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Cüzdanım")
+            .setMessage("Hesap Cüzdanınız Yok. Oluşturmak için onaya tıklayınız")
+            .setPositiveButton("Onay") { _, _ ->
+                profileViewModel.createMoneyDb()
+               findNavController().navigate(R.id. action_navigation_profile_to_myPurseFragment)
+            }
+            .show()
+    }
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
@@ -108,10 +120,14 @@ class ProfileFragment() : Fragment() {
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
 
-        val root: View = binding.root
+        profileViewModel._isPurseAccount.observe(viewLifecycleOwner) {
+            if (it) {
+                showConfirmationDialog()
+            }
+        }
 
+        profileViewModel.getMoney(binding.myPurse)
         profileViewModel.getUsername(binding.usernameID)
-       //profileViewModel.getMoney(binding.myPurse)
 
         binding.logoutID.setOnClickListener {
             auth.signOut()
@@ -126,12 +142,11 @@ class ProfileFragment() : Fragment() {
             findNavController().navigate(R.id.action_navigation_profile_to_settingsFragment)
         }
         binding.myPurse.setOnClickListener {
-            findNavController().navigate(R.id. action_navigation_profile_to_myPurseFragment)
+           // findNavController().navigate(R.id. action_navigation_profile_to_myPurseFragment)
         }
         binding.myPurseView.setOnClickListener {
-            findNavController().navigate(R.id. action_navigation_profile_to_myPurseFragment)
+           // findNavController().navigate(R.id. action_navigation_profile_to_myPurseFragment)
         }
-
 
         //önceden profil potoğrafı yüklenmişse glide ile fotoğrafı getirme
         val email = currentUser?.email
@@ -151,9 +166,8 @@ class ProfileFragment() : Fragment() {
         binding.imageView.setOnClickListener {
             openGallery()
         }
-        return root
+        return binding.root
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding

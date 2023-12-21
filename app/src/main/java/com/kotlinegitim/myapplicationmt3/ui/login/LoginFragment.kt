@@ -16,16 +16,16 @@ import com.kotlinegitim.myapplicationmt3.databinding.FragmentLoginBinding
 class LoginFragment : Fragment() {
 
     private lateinit var _binding: FragmentLoginBinding
-    private lateinit var LoginViewModel: LoginFragment2ViewModel
+    private lateinit var loginViewModel: LoginFragment2ViewModel
 
     private val binding get() = _binding
     private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        LoginViewModel = ViewModelProvider(
+        loginViewModel = ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
-        ).get(LoginFragment2ViewModel::class.java)
+        )[LoginFragment2ViewModel::class.java]
 
         auth = FirebaseAuth.getInstance()
         val currentuser = auth.currentUser;
@@ -47,9 +47,9 @@ class LoginFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             val email = binding.editTextMail.text.toString()
             val password = binding.editTextPassword.text.toString()
-            LoginViewModel.login(email, password)
+            loginViewModel.login(email, password)
         }
-        LoginViewModel._isLogin.observe(viewLifecycleOwner) {
+        loginViewModel._isLogin.observe(viewLifecycleOwner) {
             if (it) {
                 val intent = Intent(requireActivity(), MainActivity::class.java)
                 startActivity(intent)

@@ -43,7 +43,8 @@ class ProductAdapter(
     interface OnItemClickListener{
         fun onItemClick(position: Int)
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
+    : ProductViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.home_card_view, parent, false)
             return ProductViewHolder(itemView)
     }

@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
@@ -27,7 +26,7 @@ class PersonelInfosFragment : Fragment() {
     private lateinit var personelInfosViewModel : PersonelInfosViewModel
 
     private lateinit var auth : FirebaseAuth
-    val storage = Firebase.storage
+    private val storage = Firebase.storage
 
     private val binding get() = _binding
 
@@ -62,8 +61,8 @@ class PersonelInfosFragment : Fragment() {
         val email = currentUser?.email
         val profileImageView: ImageView = binding.imageViewProfilePhoto
 
-        storageRef.child("users/$email/profile.jpg").downloadUrl.addOnSuccessListener { uri ->
-                // Glide ile URL'yi ImageView'e yükle
+        storageRef.child("users/$email/profile.jpg").downloadUrl
+            .addOnSuccessListener { uri ->
             Glide.with(this).load(uri).into(profileImageView)
         }
             .addOnFailureListener { exception ->

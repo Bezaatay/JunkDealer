@@ -26,10 +26,10 @@ class MapsViewModel : ViewModel() {
         )
         locationCollectionRef?.set(latLngValues)
             ?.addOnSuccessListener {
-                Log.e("success","depolama basairili")
+                Log.e("success","latlng depolama basairili")
             }
             ?.addOnFailureListener {
-                Log.e("success","depolama basarisiz")
+                Log.e("success","latlng depolama basarisiz")
             }
     }
 }
