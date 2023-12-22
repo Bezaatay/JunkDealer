@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_navigation_profile_to_myPurseFragment"
             app:destination="@id/myPurseFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_shoppingFragment"
+            app:destination="@id/shoppingFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_sell"
@@ -88,6 +91,35 @@
             android:name="category"
             app:argType="string"
             android:defaultValue="kategori yok" />
+        <action
+            android:id="@+id/action_itemFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shoppingFragment"
+        android:name="com.kotlinegitim.myapplicationmt3.ui.shopping.ShoppingFragment"
+        android:label="fragment_shopping"
+        tools:layout="@layout/fragment_shopping" />
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.kotlinegitim.myapplicationmt3.ui.payment.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" >
+        <argument
+            android:name="prize"
+            app:argType="string"
+            android:defaultValue="0.0" />
+        <argument
+            android:name="url"
+            app:argType="string"
+            android:defaultValue="null" />
+        <argument
+            android:name="category"
+            app:argType="string"
+            android:defaultValue="null" />
+        <action
+            android:id="@+id/action_paymentFragment_to_myPurseFragment"
+            app:destination="@id/myPurseFragment" />
     </fragment>
 
 </navigation>

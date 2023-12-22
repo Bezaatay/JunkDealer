@@ -25,6 +25,7 @@
     <string name="shopping">Alışverişlerim</string>
     <string name="myPurse">Cüzdanım</string>
     <string name="tl_hint">-- TL</string>
+    <string name="verify_mail">Mail Doğrulama</string>
     <string name="load_money">Yüklemek İstediğiniz Tutarı Giriniz</string>
     <string name="load">Yükle</string>
     <string name="buy">Satın Al</string>
@@ -45,7 +46,14 @@
     <string name="all">Tümü</string>
     <string name="near">Yakınımdakiler</string>
     <string name="approval">Onayladım</string>
+    <string name="my_purchases">Satın Aldıklarım</string>
+    <string name="i_upload">Yüklediklerim</string>
+    <string name="i_sold">Sattıklarım</string>
+    <string name="prize_text">Fiyat : </string>
+    <string name="discount_text1">EskiciCüzdan ile kazandığınız indirim tutarı </string>
     <string name="verify_message">Mailinize gelen kodu onaylayınız.</string>
+    <string name="payment_amount">Ödenecek Tutar</string>
+    <string name="pay">Ödeme Yap</string>
     <string name="google_map_api_key">AIzaSyDwgx2quHjIRfDCf_rSyO6Dvn1bfzp3OqI</string>
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -73,14 +73,14 @@ class HomeFragment : Fragment(), ProductAdapter.OnItemClickListener {
 
         return root
     }
-    private fun adapterfun(){
+    private fun adapterFun(){
     productAdapter = ProductAdapter(requireActivity(), items, this)
     val layoutManager: RecyclerView.LayoutManager =
         GridLayoutManager(requireContext(), 2)
 
     recyclerView!!.layoutManager = layoutManager
     recyclerView!!.adapter = productAdapter
-}
+    }
     private fun loadFilteredItems(searchText: Editable) {
         // Clear the existing items in the list
         items.clear()
@@ -94,11 +94,11 @@ class HomeFragment : Fragment(), ProductAdapter.OnItemClickListener {
                     if (dbSearchText == productcategory) {
                         val productUrl = document.getString("Product-Url")
                         val productPrize = document.getString("Product-Prize")
-                        val productcategory = document.getString("Product-Categories")
-                        items.add(HomeDataClass(productUrl, productPrize, productcategory))
+                        val productCategory = document.getString("Product-Categories")
+                        items.add(HomeDataClass(productUrl, productPrize, productCategory))
                     }
                 }
-                adapterfun()
+                adapterFun()
             }
             .addOnFailureListener {
                 Log.e("hata nedeni ", it.toString())
@@ -118,7 +118,7 @@ class HomeFragment : Fragment(), ProductAdapter.OnItemClickListener {
                         items.add(HomeDataClass(productUrl, productPrize, productcategory))
                     }
                 }
-                adapterfun()
+                adapterFun()
             }
             .addOnFailureListener {
                 Log.e("hata nedeni ", it.toString())
@@ -171,7 +171,7 @@ class HomeFragment : Fragment(), ProductAdapter.OnItemClickListener {
                                                 if (productPrize != null && productUrl != null && productcategory != null) {
                                                     items.add(HomeDataClass(productUrl, productPrize, productcategory))
                                                 }
-                                            adapterfun()
+                                            adapterFun()
                                     }
                             }
                         }

@@ -28,11 +28,11 @@ class LoginFragment : Fragment() {
         )[LoginFragment2ViewModel::class.java]
 
         auth = FirebaseAuth.getInstance()
-        val currentuser = auth.currentUser;
+        val currentUser = auth.currentUser;
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-       if(currentuser != null) {
+        if(currentUser != null) {
             val intent = Intent(requireActivity(), MainActivity::class.java)
             startActivity(intent)
             requireActivity().finish()

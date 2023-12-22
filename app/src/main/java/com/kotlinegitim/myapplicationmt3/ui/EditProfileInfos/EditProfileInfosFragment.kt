@@ -53,11 +53,11 @@ class EditProfileInfosFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         binding.btnSaveChanges.setOnClickListener {
-            val UsernameText = binding.editTextusername.text.toString()
-            val MailText = binding.editTextMail.text.toString()
-            val PasswordText = binding.editTextpassword.text.toString()
+            val usernameText = binding.editTextusername.text.toString()
+            val mailText = binding.editTextMail.text.toString()
+            val passwordText = binding.editTextpassword.text.toString()
 
-            editProfileInfosViewModel.SaveChanges(UsernameText, MailText, PasswordText)
+            editProfileInfosViewModel.SaveChanges(usernameText, mailText, passwordText)
         }
 
         editProfileInfosViewModel._isChange.observe(viewLifecycleOwner) {

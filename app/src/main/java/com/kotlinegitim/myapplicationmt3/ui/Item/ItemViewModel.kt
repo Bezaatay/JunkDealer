@@ -8,25 +8,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.model.LatLng
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 
 class ItemViewModel : ViewModel() {
 
-    private val auth: FirebaseAuth by lazy {
-        FirebaseAuth.getInstance()
-    }
     private val db = FirebaseFirestore.getInstance()
     private val storageRef = Firebase.storage.reference
-    private val uid = auth.currentUser?.uid.toString()
     private val _locationLiveData = MutableLiveData<LatLng>()
     val locationLiveData: LiveData<LatLng> get() = _locationLiveData
 
 
     fun getItemProperties(
-        urltxt: CharSequence,
+        urlTxt: CharSequence,
         productPhoto: ImageView,
         sellerUsername: TextView,
         productCategories: TextView,
@@ -34,7 +29,7 @@ class ItemViewModel : ViewModel() {
         productPrize: TextView,
         sellerPhoto: ImageView
     ) {
-        val url = urltxt.toString()
+        val url = urlTxt.toString()
         db.collection("products").get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
@@ -46,6 +41,8 @@ class ItemViewModel : ViewModel() {
                         val productCategorydb = document.getString("Product-Categories")
                         val productDescriptiondb = document.getString("Product-Description")
                         val sellerMaildb = document.getString("Seller-Mail")
+                        val productLat = document.getDouble("Product-Latitude")
+                        val productLng = document.getDouble("Product-Longitude")
 
                         productCategories.text = productCategorydb
                         productDescription.text = productDescriptiondb
@@ -55,6 +52,7 @@ class ItemViewModel : ViewModel() {
                             .into(productPhoto)
                         getSellerUsername(sellerMaildb, sellerUsername)
                         getSellerProfileImage(sellerMaildb, sellerPhoto)
+                        getLocation(productLat, productLng)
                     }
                 }
             }
@@ -63,7 +61,6 @@ class ItemViewModel : ViewModel() {
             }
 
     }
-
     private fun getSellerUsername(sellerMailDb: String?, sellerUsername: TextView) {
         db.collection("users").get()
             .addOnSuccessListener { documents ->
@@ -79,7 +76,6 @@ class ItemViewModel : ViewModel() {
                 Log.e("hata nedeni ", it.toString())
             }
     }
-
     private fun getSellerProfileImage(sellerMailDb: String?, sellerPhoto: ImageView) {
 
         storageRef.child("users/$sellerMailDb/profile.jpg").downloadUrl
@@ -93,24 +89,7 @@ class ItemViewModel : ViewModel() {
             }
     }
 
-    fun getLocation(latitudeTxt: String, longitudeTxt: String) {
-      //  val latitudeTxtDbl = latitudeTxt.toDouble()
-      //  val longitudeTxtDbl = longitudeTxt.toDouble()
-
-        db.collection("products").get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    val productLat = document.getDouble("Product-Latitude")
-                    val productLng = document.getDouble("Product-Latitude")
-
-                    if (productLat != latitudeTxt && productLng != longitudeTxt) {
-                        // LiveData'ya yeni bir LatLng nesnesi gönderme
-                        _locationLiveData.value = LatLng(productLat!!, productLng!!)
-                    } else {
-                        // Eğer latitude veya longitude değeri null ise, hatayı log'a yazabilirsiniz
-                        Log.e("PersonelInfosViewModel", "Latitude veya longitude değeri null.")
-                    }
-                }
-            }
+    private fun getLocation(productLat: Double?, productLng: Double?) {
+        _locationLiveData.value = LatLng(productLat!!, productLng!!)
     }
 }

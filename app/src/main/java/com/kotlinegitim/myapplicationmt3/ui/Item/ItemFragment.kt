@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -28,6 +30,20 @@ class ItemFragment : Fragment(){
         FirebaseAuth.getInstance()
     }
 
+    private fun showConfirmationDialog(productPrize: String, category: String, photoUrl: String) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("%5 İndirim müjdesi")
+            .setMessage("Satın almak istediğiniz ürünü EskiciCüzdan ile daha ucuza ödeyin!")
+            .setPositiveButton("Tamam") { _, _ ->
+
+                findNavController().navigate(R.id.action_itemFragment_to_paymentFragment, Bundle().apply {
+                    putString("prize",productPrize)
+                    putString("url",photoUrl)
+                    putString("category",category)
+                })
+            }
+            .show()
+    }
     private val callback = OnMapReadyCallback { googleMap ->
 
         itemViewModel.locationLiveData.observe(viewLifecycleOwner){
@@ -50,10 +66,6 @@ class ItemFragment : Fragment(){
         )[ItemViewModel::class.java]
         _binding = FragmentItemBinding.inflate(inflater, container, false)
 
-        val productLat = binding.latitudetxt.text.toString()
-        val productLng = binding.longitudetxt.text.toString()
-        itemViewModel.getLocation(productLat,productLng)
-
         binding.urltxt.text = requireArguments().getString("url").toString()
         val url = binding.urltxt.text
 
@@ -64,7 +76,7 @@ class ItemFragment : Fragment(){
         val productDescription = binding.productDescription
         val productPrize = binding.productPrize
 
-         itemViewModel.getItemProperties(
+        itemViewModel.getItemProperties(
              url,
              productPhoto,
              sellerUsername,
@@ -72,6 +84,13 @@ class ItemFragment : Fragment(){
              productDescription,
              productPrize,
              sellerPhoto)
+
+        binding.buyBtn.setOnClickListener {
+            val prize = productPrize.text.toString()
+            val category = productCategories.text.toString()
+            val photoUrl = url.toString()
+            showConfirmationDialog(prize, category, photoUrl)
+        }
 
         return  binding.root
     }

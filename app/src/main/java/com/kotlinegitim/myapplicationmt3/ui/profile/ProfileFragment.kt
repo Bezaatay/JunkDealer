@@ -11,7 +11,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -25,7 +24,6 @@ import com.google.firebase.storage.ktx.storage
 import com.kotlinegitim.myapplicationmt3.ui.activity.LoginSigninActivity
 import com.kotlinegitim.myapplicationmt3.R
 import com.kotlinegitim.myapplicationmt3.databinding.FragmentProfileBinding
-import com.kotlinegitim.myapplicationmt3.ui.activity.MainActivity
 
 class ProfileFragment() : Fragment() {
 
@@ -36,16 +34,23 @@ class ProfileFragment() : Fragment() {
     val storage = Firebase.storage
     private lateinit var auth: FirebaseAuth
 
-    fun showConfirmationDialog() {
+    private fun showVerifyDialog(){
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Cüzdanım")
-            .setMessage("Hesap Cüzdanınız Yok. Oluşturmak için onaya tıklayınız")
-            .setPositiveButton("Onay") { _, _ ->
-                profileViewModel.createMoneyDb()
-               findNavController().navigate(R.id. action_navigation_profile_to_myPurseFragment)
+        builder.setTitle("Verify Email")
+            .setMessage("Mailinize gelen doğrulama kodunu onaylayınız.")
+            .setPositiveButton("Onayladım") { _, _ ->
+                profileViewModel._isVerify.observe(viewLifecycleOwner) { isVerified ->
+                    Log.e("_isVerify","false")
+                    if (isVerified) {
+                        Log.e("_isVerify","true")
+                        binding.verifyEmail.visibility = View.GONE
+                        binding.verifyIcon.visibility =View.VISIBLE
+                    }
+                }
             }
             .show()
     }
+
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
@@ -97,12 +102,11 @@ class ProfileFragment() : Fragment() {
             }.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     downloadUri = task.result
-                    Log.e("alındı","$downloadUri")
                     // Görselin indirilebilir URL'sini alınca yapılacak işlemler
                     // Örneğin, Firestore'a kaydetme gibi
                     // downloadUri.toString() kullanarak URL'yi alabilirsiniz
                 } else {
-                    Log.e("görsel","yüklenemedii")
+                    Log.e("profile frag. görsel","yüklenemedi")
                     // Görselin yüklenemediği durumlar için hata işlemleri
                 }
             }
@@ -115,25 +119,22 @@ class ProfileFragment() : Fragment() {
         )[ProfileViewModel::class.java]
 
         auth = FirebaseAuth.getInstance()
-        val  currentUser = auth.currentUser
-        val storageRef = storage.reference
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
 
-        profileViewModel._isPurseAccount.observe(viewLifecycleOwner) {
-            if (it) {
-                showConfirmationDialog()
-            }
-        }
-
-        profileViewModel.getMoney(binding.myPurse)
         profileViewModel.getUsername(binding.usernameID)
+        profileViewModel.getProfilePhoto(binding.imageView)
+        profileViewModel.createMoneyDb(binding.myPurse)
 
         binding.logoutID.setOnClickListener {
             auth.signOut()
             val intent = Intent(requireActivity(), LoginSigninActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
+        }
+        binding.verifyEmail.setOnClickListener {
+            profileViewModel.verifyMail()
+           // showVerifyDialog()
         }
         binding.informationID.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_profile_to_personelInfosFragment)
@@ -142,31 +143,23 @@ class ProfileFragment() : Fragment() {
             findNavController().navigate(R.id.action_navigation_profile_to_settingsFragment)
         }
         binding.myPurse.setOnClickListener {
-           // findNavController().navigate(R.id. action_navigation_profile_to_myPurseFragment)
+           findNavController().navigate(R.id.action_navigation_profile_to_myPurseFragment)
         }
         binding.myPurseView.setOnClickListener {
-           // findNavController().navigate(R.id. action_navigation_profile_to_myPurseFragment)
+           findNavController().navigate(R.id.action_navigation_profile_to_myPurseFragment)
         }
-
-        //önceden profil potoğrafı yüklenmişse glide ile fotoğrafı getirme
-        val email = currentUser?.email
-        val profileImageView: ImageView = binding.imageView
-        val imagePath = "users/$email/profile.jpg"
-
-        storageRef.child(imagePath).downloadUrl.addOnSuccessListener {
-            // Glide ile URL'yi ImageView'e yükle
-
-                Glide.with(this).load(it).into(profileImageView)
-
+        binding.shoppingBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_profile_to_shoppingFragment)
         }
-            .addOnFailureListener { exception ->
-            Log.e("GlideError", "Fotoğraf yüklenirken hata oluştu: ${exception.message}")
-        }
-
         binding.imageView.setOnClickListener {
             openGallery()
         }
         return binding.root
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        profileViewModel.checkEmailVerifiedOrNot()
+
+        super.onViewCreated(view, savedInstanceState)
     }
     override fun onDestroyView() {
         super.onDestroyView()
