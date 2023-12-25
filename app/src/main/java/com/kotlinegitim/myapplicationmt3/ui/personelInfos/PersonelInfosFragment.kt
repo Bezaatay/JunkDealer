@@ -37,7 +37,7 @@ class PersonelInfosFragment : Fragment() {
 
                 val MyHome = it
                 googleMap.addMarker(MarkerOptions().position(MyHome).title("Home"))
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MyHome,10f))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MyHome,17f))
             }
         }
     }

@@ -40,6 +40,8 @@ class ItemFragment : Fragment(){
                     putString("prize",productPrize)
                     putString("url",photoUrl)
                     putString("category",category)
+                    putString("description",binding.productDescription.text.toString())
+                    putString("sellerUsername",binding.sellerUsername.text.toString())
                 })
             }
             .show()

@@ -50,9 +50,11 @@
     <string name="i_upload">Yüklediklerim</string>
     <string name="i_sold">Sattıklarım</string>
     <string name="prize_text">Fiyat : </string>
-    <string name="discount_text1">EskiciCüzdan ile kazandığınız indirim tutarı </string>
+    <string name="discount_text1">EskiciCüzdan ile kazandığınız indirim</string>
+    <string name="discount_text2">tutarı</string>
     <string name="verify_message">Mailinize gelen kodu onaylayınız.</string>
     <string name="payment_amount">Ödenecek Tutar</string>
+    <string name="shopping_done">Alışveriş Tamamlandı</string>
     <string name="pay">Ödeme Yap</string>
     <string name="google_map_api_key">AIzaSyDwgx2quHjIRfDCf_rSyO6Dvn1bfzp3OqI</string>
 

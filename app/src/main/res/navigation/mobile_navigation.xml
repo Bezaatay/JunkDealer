@@ -120,6 +120,17 @@
         <action
             android:id="@+id/action_paymentFragment_to_myPurseFragment"
             app:destination="@id/myPurseFragment" />
+        <action
+            android:id="@+id/action_paymentFragment_to_shoppingFragment"
+            app:destination="@id/shoppingFragment" />
+        <argument
+            android:name="sellerMail"
+            app:argType="string"
+            android:defaultValue="null" />
+        <argument
+            android:name="description"
+            app:argType="string"
+            android:defaultValue="null" />
     </fragment>
 
 </navigation>

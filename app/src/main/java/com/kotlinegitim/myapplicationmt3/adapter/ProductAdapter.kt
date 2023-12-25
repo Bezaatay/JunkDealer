@@ -29,6 +29,7 @@ class ProductAdapter(
         val priceTextView1: TextView = itemView.findViewById(R.id.textView1)
         val imageViewHeart: ImageView = itemView.findViewById(R.id.imageViewHeart)
         val productcategorytextview: TextView = itemView.findViewById(R.id.product_info_textview)
+        val distancetextview: TextView = itemView.findViewById(R.id.distanceText)
 
         init {
           itemView.setOnClickListener(this)
@@ -53,8 +54,13 @@ class ProductAdapter(
         Glide.with(context).load(items[position].ProductUrl).into(holder.imageView1)
         holder.priceTextView1.text = items[position].ProductPrice
         holder.productcategorytextview.text = items[position].ProductCategory
-    }
+        if (items[position].distance != null) {
+            holder.distancetextview.text = "${items[position].distance} KM"
+        } else {
+            holder.distancetextview.text = ""
+        }
 
+    }
     override fun getItemCount(): Int {
         return items.size
     }

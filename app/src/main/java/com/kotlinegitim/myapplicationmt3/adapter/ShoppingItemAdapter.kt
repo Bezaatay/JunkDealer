@@ -50,7 +50,6 @@ class ShoppingItemAdapter(
         Glide.with(context).load(article[position].itemUrl).into(holder.productPhoto)
         holder.productCategories.text = article[position].itemCategory
         holder.productPrize.text = article[position].itemPrice
-        holder.date.text = article[position].date.toString()
     }
 
     override fun getItemCount(): Int {

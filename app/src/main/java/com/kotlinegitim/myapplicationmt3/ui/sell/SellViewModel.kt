@@ -135,7 +135,13 @@ class SellViewModel : ViewModel() {
         }
     }
 
-    private fun uploadUserProduct(currentUser:String, editTextProductCategories:String, editTextProductDescription:String, editTextProductPrize:String, productUrl : String){
+    private fun uploadUserProduct(
+        currentUser:String,
+        editTextProductCategories:String,
+        editTextProductDescription:String,
+        editTextProductPrize:String,
+        productUrl : String
+    ){
         val userProductMap = hashMapOf(
             "Product-Categories" to editTextProductCategories,
             "Product-Description" to editTextProductDescription,

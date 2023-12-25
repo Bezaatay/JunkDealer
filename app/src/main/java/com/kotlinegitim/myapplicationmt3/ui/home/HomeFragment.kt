@@ -95,7 +95,7 @@ class HomeFragment : Fragment(), ProductAdapter.OnItemClickListener {
                         val productUrl = document.getString("Product-Url")
                         val productPrize = document.getString("Product-Prize")
                         val productCategory = document.getString("Product-Categories")
-                        items.add(HomeDataClass(productUrl, productPrize, productCategory))
+                        items.add(HomeDataClass(productUrl, productPrize, productCategory, null))
                     }
                 }
                 adapterFun()
@@ -115,7 +115,7 @@ class HomeFragment : Fragment(), ProductAdapter.OnItemClickListener {
                     val productcategory = document.getString("Product-Categories")
 
                     if (productPrize != null && productUrl != null && productcategory != null) {
-                        items.add(HomeDataClass(productUrl, productPrize, productcategory))
+                        items.add(HomeDataClass(productUrl, productPrize, productcategory, null))
                     }
                 }
                 adapterFun()
@@ -169,7 +169,7 @@ class HomeFragment : Fragment(), ProductAdapter.OnItemClickListener {
                                                 val productcategory = document.getString("Product-Categories")
 
                                                 if (productPrize != null && productUrl != null && productcategory != null) {
-                                                    items.add(HomeDataClass(productUrl, productPrize, productcategory))
+                                                    items.add(HomeDataClass(productUrl, productPrize, productcategory,distance))
                                                 }
                                             adapterFun()
                                     }

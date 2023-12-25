@@ -77,18 +77,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/kmEdittext"
-            android:layout_width="68dp"
-            android:layout_height="22dp"
-            android:layout_marginStart="125dp"
-            android:layout_marginEnd="16dp"
-            android:ems="10"
-            android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@+id/RecyclerViewID"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/nearProducts" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

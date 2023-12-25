@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +28,7 @@ class PaymentFragment : Fragment() {
 
     private val binding get() = _binding
 
-    private fun showConfirmationDialog() {
+    private fun showNotEnoughMoneyDialog() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Yetersiz Kredi")
             .setMessage("Cüzdanınızda yeterli bakiye yok. Yüklemek ister misiniz?")
@@ -40,6 +41,21 @@ class PaymentFragment : Fragment() {
             }
             .show()
     }
+
+    private fun enoughMoneyDialogShown() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Alışveriş Tamamlandı.")
+            .setMessage("Ödemeniz başarıyla gerçekleşti. Keyifli alışverişler dileriz <3")
+            .setPositiveButton("Evet") { _, _ ->
+                findNavController().navigate(R.id.action_paymentFragment_to_shoppingFragment)
+            }
+            .setNegativeButton("Hayır") { dialog, _ ->
+                // Hayır'a basıldığında yapılacak işlemler
+                dialog.dismiss()
+            }
+            .show()
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +74,8 @@ class PaymentFragment : Fragment() {
         val prize = requireArguments().getString("prize").toString()
         val category = requireArguments().getString("category").toString()
         val photoUrl = requireArguments().getString("url").toString()
+        val description = requireArguments().getString("description").toString()
+        val sellerUsername = requireArguments().getString("sellerUsername").toString()
 
         item.add(PaymentDataClass(photoUrl,prize,category))
 
@@ -89,9 +107,27 @@ class PaymentFragment : Fragment() {
         binding.payBtn.setOnClickListener {
             val totalPaymentTxt = binding.totalPaymentTxt.text.toString()
             val purseTxt = binding.moneyTxt.text.toString()
-            paymentViewModel.buyProduct(totalPaymentTxt,purseTxt)
+            paymentViewModel.buyProduct(totalPaymentTxt,purseTxt,photoUrl,category,sellerUsername,description)
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+
+        paymentViewModel.notEnoughMoneyDialog.observe(viewLifecycleOwner, Observer { showDialog ->
+            if (showDialog) {
+                showNotEnoughMoneyDialog()
+                paymentViewModel.notEnoughMoneyDialogShown()
+            }
+        })
+        paymentViewModel.enoughMoneyDialog.observe(viewLifecycleOwner, Observer { showDialog ->
+            if (showDialog) {
+                enoughMoneyDialogShown()
+                paymentViewModel.enoughMoneyDialogShown()
+            }
+        })
+        super.onViewCreated(view, savedInstanceState)
     }
 }
