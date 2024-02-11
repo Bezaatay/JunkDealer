@@ -13,7 +13,6 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kotlinegitim.myapplicationmt3.R
 import com.kotlinegitim.myapplicationmt3.databinding.FragmentItemBinding
@@ -26,14 +25,12 @@ class ItemFragment : Fragment(){
     private val binding get() = _binding!!
 
     private val db = FirebaseFirestore.getInstance()
-    private val auth: FirebaseAuth by lazy {
-        FirebaseAuth.getInstance()
-    }
 
     private fun showConfirmationDialog(productPrize: String, category: String, photoUrl: String) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("%5 İndirim müjdesi")
             .setMessage("Satın almak istediğiniz ürünü EskiciCüzdan ile daha ucuza ödeyin!")
+            .setIcon(R.drawable.shoppingfast)
             .setPositiveButton("Tamam") { _, _ ->
 
                 findNavController().navigate(R.id.action_itemFragment_to_paymentFragment, Bundle().apply {
@@ -53,7 +50,7 @@ class ItemFragment : Fragment(){
 
                 val sellerHome = it
                 googleMap.addMarker(MarkerOptions().position(sellerHome).title("Home"))
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sellerHome,10f))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sellerHome,17f))
             }
         }
     }
@@ -94,6 +91,9 @@ class ItemFragment : Fragment(){
             showConfirmationDialog(prize, category, photoUrl)
         }
 
+        binding.imageViewHeart.setOnClickListener {
+            itemViewModel.myFavorites(url)
+        }
         return  binding.root
     }
 
@@ -101,5 +101,11 @@ class ItemFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+
+     itemViewModel._isFav.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.imageViewHeart.setImageResource(R.drawable.filledheart)
+            }
+        }
     }
 }

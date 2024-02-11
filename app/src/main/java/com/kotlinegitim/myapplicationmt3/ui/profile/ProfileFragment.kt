@@ -102,9 +102,6 @@ class ProfileFragment() : Fragment() {
             }.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     downloadUri = task.result
-                    // Görselin indirilebilir URL'sini alınca yapılacak işlemler
-                    // Örneğin, Firestore'a kaydetme gibi
-                    // downloadUri.toString() kullanarak URL'yi alabilirsiniz
                 } else {
                     Log.e("profile frag. görsel","yüklenemedi")
                     // Görselin yüklenemediği durumlar için hata işlemleri
@@ -150,6 +147,9 @@ class ProfileFragment() : Fragment() {
         }
         binding.shoppingBtn.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_profile_to_shoppingFragment)
+        }
+        binding.favoritesID.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_profile_to_myFavsFragment)
         }
         binding.imageView.setOnClickListener {
             openGallery()

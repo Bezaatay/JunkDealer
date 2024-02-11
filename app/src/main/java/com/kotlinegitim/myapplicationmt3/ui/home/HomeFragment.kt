@@ -12,12 +12,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.kotlinegitim.myapplicationmt3.R
-import com.kotlinegitim.myapplicationmt3.adapter.ProductAdapter
-import com.kotlinegitim.myapplicationmt3.data.HomeDataClass
+import com.kotlinegitim.myapplicationmt3.model.data.adapter.ProductAdapter
 import com.kotlinegitim.myapplicationmt3.databinding.FragmentHomeBinding
+import com.kotlinegitim.myapplicationmt3.model.data.HomeDataClass
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
@@ -37,6 +39,7 @@ class HomeFragment : Fragment(), ProductAdapter.OnItemClickListener {
     private val auth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
+    private val currentUser = auth.currentUser!!.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,12 +77,12 @@ class HomeFragment : Fragment(), ProductAdapter.OnItemClickListener {
         return root
     }
     private fun adapterFun(){
-    productAdapter = ProductAdapter(requireActivity(), items, this)
-    val layoutManager: RecyclerView.LayoutManager =
-        GridLayoutManager(requireContext(), 2)
+        productAdapter = ProductAdapter(requireActivity(), items, this)
+        val layoutManager: RecyclerView.LayoutManager =
+            GridLayoutManager(requireContext(), 2)
 
-    recyclerView!!.layoutManager = layoutManager
-    recyclerView!!.adapter = productAdapter
+        recyclerView!!.layoutManager = layoutManager
+        recyclerView!!.adapter = productAdapter
     }
     private fun loadFilteredItems(searchText: Editable) {
         // Clear the existing items in the list
@@ -95,7 +98,7 @@ class HomeFragment : Fragment(), ProductAdapter.OnItemClickListener {
                         val productUrl = document.getString("Product-Url")
                         val productPrize = document.getString("Product-Prize")
                         val productCategory = document.getString("Product-Categories")
-                        items.add(HomeDataClass(productUrl, productPrize, productCategory, null))
+                    items.add(HomeDataClass(productUrl, productPrize, productCategory, null, false))
                     }
                 }
                 adapterFun()
@@ -107,16 +110,28 @@ class HomeFragment : Fragment(), ProductAdapter.OnItemClickListener {
     private fun loadAllItems() {
         items.clear()
 
-        db.collection("products").get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    val productUrl = document.getString("Product-Url")
-                    val productPrize = document.getString("Product-Prize")
-                    val productcategory = document.getString("Product-Categories")
+        val productTask = db.collection("products").get()
+        val favoritesTask = db.collection("users").document(currentUser).collection("myFavorites").get()
 
-                    if (productPrize != null && productUrl != null && productcategory != null) {
-                        items.add(HomeDataClass(productUrl, productPrize, productcategory, null))
+        Tasks.whenAllSuccess<QuerySnapshot>(productTask, favoritesTask)
+            .addOnSuccessListener { results ->
+                val productDocuments = results[0] as QuerySnapshot
+                val favoritesDocuments = results[1] as QuerySnapshot
+
+                for (productDocument in productDocuments) {
+                    val productUrl = productDocument.getString("Product-Url")
+                    val productPrize = productDocument.getString("Product-Prize")
+                    val productcategory = productDocument.getString("Product-Categories")
+
+                    // Eşleşen belgeyi bul
+                    val matchingFavoriteDocument = favoritesDocuments.firstOrNull { favoriteDoc ->
+                        favoriteDoc.getString("photoUrl") == productUrl
                     }
+
+                    // Belge varsa isFav değerini al, yoksa false olarak ata
+                    val isFav = matchingFavoriteDocument?.getBoolean("isFavorite") ?: false
+
+                    items.add(HomeDataClass(productUrl, productPrize, productcategory, null, isFav))
                 }
                 adapterFun()
             }
@@ -124,6 +139,7 @@ class HomeFragment : Fragment(), ProductAdapter.OnItemClickListener {
                 Log.e("hata nedeni ", it.toString())
             }
     }
+
     private fun loadNearItems() {
         items.clear()
 
@@ -161,39 +177,40 @@ class HomeFragment : Fragment(), ProductAdapter.OnItemClickListener {
                                     return radius * c
                                 }
                                 val distance = calculateDistance(userLatitude!!, userLongitude!!, productLatitude!!, productLongitude!!)
-                                Log.e("distance=","$distance")
+                                val formattedDistanceStr = String.format("%.1f", distance)
+                                val formattedDistance = formattedDistanceStr.toDouble()
 
-                                if(distance < 5){
-                                                val productUrl = document.getString("Product-Url")
-                                                val productPrize = document.getString("Product-Prize")
-                                                val productcategory = document.getString("Product-Categories")
+                                if (distance < 10) {
+                                    val productUrl = document.getString("Product-Url")
+                                    val productPrize = document.getString("Product-Prize")
+                                    val productcategory = document.getString("Product-Categories")
 
-                                                if (productPrize != null && productUrl != null && productcategory != null) {
-                                                    items.add(HomeDataClass(productUrl, productPrize, productcategory,distance))
-                                                }
-                                            adapterFun()
+                                    if (productPrize != null && productUrl != null && productcategory != null) {
+                                        items.add(HomeDataClass(productUrl, productPrize, productcategory, formattedDistance, null))
                                     }
+                                    adapterFun()
+                                }
                             }
                         }
                 }
                 .addOnFailureListener {
-                    Log.e("addOnFailure","$it")
+                    Log.e("addOnFailure", "$it")
                 }
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         (requireActivity() as AppCompatActivity).supportActionBar?.show()
     }
     override fun onItemClick(position: Int) {
-        Log.e("onıtemclicked","$position clicked")
 
         productAdapter!!.notifyItemChanged(position)
 
         findNavController().navigate(R.id.action_navigation_home_to_itemFragment, Bundle().apply {
-            putString("url",items[position].ProductUrl)
-            putString("prize",items[position].ProductPrice)
-            putString("category",items[position].ProductCategory)
+            putString("url",items[position].productUrl)
+            putString("prize",items[position].productPrice)
+            putString("category",items[position].productCategory)
         })
     }
 }

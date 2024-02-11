@@ -65,6 +65,7 @@ class SellFragment : Fragment() {
 
         ListOfProducts.add("ayakkabi")
         ListOfProducts.add("pijama")
+        ListOfProducts.add("bluz")
         ListOfProducts.add("kazak")
         ListOfProducts.add("pantolon")
         ListOfProducts.add("sapka")
@@ -72,6 +73,7 @@ class SellFragment : Fragment() {
         ListOfProducts.add("firin")
         ListOfProducts.add("camasir makinesi")
         ListOfProducts.add("sac kurutma makinesi")
+        ListOfProducts.add("koltuk")
 
         dataAdapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,android.R.id.text1,ListOfProducts)
 
@@ -80,8 +82,8 @@ class SellFragment : Fragment() {
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                val product_categories = ListOfProducts[p2]
-               binding.textView11.text = product_categories
+                val productCategories = ListOfProducts[p2]
+               binding.textView11.text = productCategories
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -92,20 +94,20 @@ class SellFragment : Fragment() {
         sellViewModel.getLocation(binding.latitudeValue,binding.longitudeValue)
 
         binding.UploadProductBtn.setOnClickListener {
-            val ProductCategories=binding.textView11.text.toString()
-            val ProductDescription= binding.editTextProductDescription.text.toString()
-            val ProductPrize= binding.editTextProductPrize.text.toString()
-            val SellerMail = binding.mailtxt.text.toString()
-            val ProductLocationLatitude=binding.latitudeValue.text.toString()
-            val ProductLocationLongitude=binding.longitudeValue.text.toString()
+            val productCategories=binding.textView11.text.toString()
+            val productDescription= binding.editTextProductDescription.text.toString()
+            val productPrize= binding.editTextProductPrize.text.toString()
+            val sellerMail = binding.mailtxt.text.toString()
+            val productLocationLatitude=binding.latitudeValue.text.toString()
+            val productLocationLongitude=binding.longitudeValue.text.toString()
 
             sellViewModel.uploadUrl(selectedImageUri,
-                ProductCategories,
-                ProductDescription,
-                ProductPrize,
-                SellerMail,
-                ProductLocationLatitude,
-                ProductLocationLongitude)
+                productCategories,
+                productDescription,
+                productPrize,
+                sellerMail,
+                productLocationLatitude,
+                productLocationLongitude)
         }
 
         binding.imageViewAddPhoto1.setOnClickListener {

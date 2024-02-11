@@ -13,8 +13,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlinegitim.myapplicationmt3.R
-import com.kotlinegitim.myapplicationmt3.adapter.PaymentAdapter
-import com.kotlinegitim.myapplicationmt3.data.PaymentDataClass
+import com.kotlinegitim.myapplicationmt3.model.data.adapter.PaymentAdapter
+import com.kotlinegitim.myapplicationmt3.model.data.PaymentDataClass
 import com.kotlinegitim.myapplicationmt3.databinding.FragmentPaymentBinding
 
 class PaymentFragment : Fragment() {

@@ -5,6 +5,7 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+    <color name="dark_purple">#591E78</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="light_grey">#C1C1C1</color>
@@ -16,5 +17,6 @@
     <color name="edit_text_forgotpass">#0012A3</color>
     <color name="page_background">#EFEFEF</color>
     <color name="light_purple">#A674FD</color>
+    <color name="light_purple2">#E0D3F5</color>
     <color name="yellow">#E4E400</color>
 </resources>

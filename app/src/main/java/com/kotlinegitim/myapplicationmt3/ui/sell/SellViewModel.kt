@@ -134,7 +134,6 @@ class SellViewModel : ViewModel() {
             uploadUserProduct(currentUserUid,productCategories, productDescription, productPrize,productUrl)
         }
     }
-
     private fun uploadUserProduct(
         currentUser:String,
         editTextProductCategories:String,

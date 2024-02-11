@@ -55,6 +55,7 @@
     <string name="verify_message">Mailinize gelen kodu onaylayınız.</string>
     <string name="payment_amount">Ödenecek Tutar</string>
     <string name="shopping_done">Alışveriş Tamamlandı</string>
+    <string name="earn">Kazancım</string>
     <string name="pay">Ödeme Yap</string>
     <string name="google_map_api_key">AIzaSyDwgx2quHjIRfDCf_rSyO6Dvn1bfzp3OqI</string>
 

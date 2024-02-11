@@ -165,7 +165,7 @@ class PaymentViewModel : ViewModel() {
             }
     }
 
-    fun deleteInProducts(photoUrl: String) {
+    private fun deleteInProducts(photoUrl: String) {
         db.collection("products")
             .whereEqualTo("Product-Url", photoUrl)
             .get()

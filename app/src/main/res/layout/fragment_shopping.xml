@@ -23,8 +23,10 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/my_purchases"
-            android:textAlignment="center"
-            android:textSize="16sp" />
+            android:textStyle="bold"
+            android:fontFamily="cursive"
+            android:textSize="20sp"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/iUploadText"
@@ -33,7 +35,9 @@
             android:layout_weight="1"
             android:text="@string/i_upload"
             android:textAlignment="center"
-            android:textSize="16sp" />
+            android:textStyle="bold"
+            android:fontFamily="cursive"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/iSoldText"
@@ -42,12 +46,14 @@
             android:layout_weight="1"
             android:text="@string/i_sold"
             android:textAlignment="center"
-            android:textSize="16sp" />
+            android:textStyle="bold"
+            android:fontFamily="cursive"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecyclerViewID"
-        android:layout_width="409dp"
+        android:layout_width="390dp"
         android:layout_height="687dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="10dp"

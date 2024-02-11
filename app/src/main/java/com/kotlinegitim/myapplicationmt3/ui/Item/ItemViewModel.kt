@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -17,8 +18,13 @@ class ItemViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
     private val storageRef = Firebase.storage.reference
     private val _locationLiveData = MutableLiveData<LatLng>()
+    var _isFav : MutableLiveData<Boolean> = MutableLiveData(false)
     val locationLiveData: LiveData<LatLng> get() = _locationLiveData
 
+    private val auth: FirebaseAuth by lazy {
+        FirebaseAuth.getInstance()
+    }
+    private val currentUser = auth.currentUser?.uid
 
     fun getItemProperties(
         urlTxt: CharSequence,
@@ -36,22 +42,22 @@ class ItemViewModel : ViewModel() {
                     val productUrl = document.getString("Product-Url").toString()
 
                     if (url == productUrl) {
-                        val productUrldb = document.getString("Product-Url")
-                        val productPrizedb = document.getString("Product-Prize")
-                        val productCategorydb = document.getString("Product-Categories")
-                        val productDescriptiondb = document.getString("Product-Description")
-                        val sellerMaildb = document.getString("Seller-Mail")
+                        val productUrlDb = document.getString("Product-Url")
+                        val productPrizeDb = document.getString("Product-Prize")
+                        val productCategoryDb = document.getString("Product-Categories")
+                        val productDescriptionDb = document.getString("Product-Description")
+                        val sellerMailDb = document.getString("Seller-Mail")
                         val productLat = document.getDouble("Product-Latitude")
                         val productLng = document.getDouble("Product-Longitude")
 
-                        productCategories.text = productCategorydb
-                        productDescription.text = productDescriptiondb
-                        productPrize.text = productPrizedb
+                        productCategories.text = productCategoryDb
+                        productDescription.text = productDescriptionDb
+                        productPrize.text = productPrizeDb
                         Glide.with(sellerPhoto.context)
-                            .load(productUrldb)
+                            .load(productUrlDb)
                             .into(productPhoto)
-                        getSellerUsername(sellerMaildb, sellerUsername)
-                        getSellerProfileImage(sellerMaildb, sellerPhoto)
+                        getSellerUsername(sellerMailDb, sellerUsername)
+                        getSellerProfileImage(sellerMailDb, sellerPhoto)
                         getLocation(productLat, productLng)
                     }
                 }
@@ -88,8 +94,25 @@ class ItemViewModel : ViewModel() {
                 Log.e("GlideError", "Fotoğraf yüklenirken hata oluştu: ${it.message}")
             }
     }
-
     private fun getLocation(productLat: Double?, productLng: Double?) {
         _locationLiveData.value = LatLng(productLat!!, productLng!!)
+    }
+    fun myFavorites(url: CharSequence) {
+        val photoUrl = url.toString()
+        val favoritesRef = db.collection("users").document(currentUser!!).collection("myFavorites")
+
+        val favMap = hashMapOf(
+            "photoUrl" to photoUrl,
+            "isFavorite" to true
+        )
+            favoritesRef.document().set(favMap)
+            .addOnSuccessListener {
+                Log.e("fava eklendi", photoUrl)
+                _isFav.value = true
+                Log.e("isfav = ","$_isFav")
+            }
+            .addOnFailureListener {
+                Log.e("fav ekleme hatası itemvm", "HATA NEDENİ -> $it")
+            }
     }
 }

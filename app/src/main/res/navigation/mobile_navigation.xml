@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_navigation_profile_to_shoppingFragment"
             app:destination="@id/shoppingFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_myFavsFragment"
+            app:destination="@id/myFavsFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_sell"
@@ -63,7 +66,9 @@
         tools:layout="@layout/fragment_edit_profile_infos" >
         <action
             android:id="@+id/action_editProfileInfosFragment_to_personelInfosFragment"
-            app:destination="@id/personelInfosFragment" />
+            app:destination="@id/personelInfosFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/myPurseFragment"
@@ -132,5 +137,10 @@
             app:argType="string"
             android:defaultValue="null" />
     </fragment>
+    <fragment
+        android:id="@+id/myFavsFragment"
+        android:name="com.kotlinegitim.myapplicationmt3.ui.myFavs.MyFavsFragment"
+        android:label="fragment_my_favs"
+        tools:layout="@layout/fragment_my_favs" />
 
 </navigation>

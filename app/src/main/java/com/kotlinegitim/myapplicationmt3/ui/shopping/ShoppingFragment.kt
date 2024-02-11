@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.kotlinegitim.myapplicationmt3.adapter.Shopping2Adapter
-import com.kotlinegitim.myapplicationmt3.data.Shopping2DataClass
+import com.kotlinegitim.myapplicationmt3.model.data.adapter.Shopping2Adapter
+import com.kotlinegitim.myapplicationmt3.model.data.Shopping2DataClass
 import com.kotlinegitim.myapplicationmt3.databinding.FragmentShoppingBinding
 
 class ShoppingFragment : Fragment(), Shopping2Adapter.OnItemClickListener {
@@ -30,6 +30,7 @@ class ShoppingFragment : Fragment(), Shopping2Adapter.OnItemClickListener {
         FirebaseAuth.getInstance()
     }
     private val currentUser = auth.currentUser?.uid
+    private val currentUserDb = db.collection("users").document(currentUser!!)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,13 +46,16 @@ class ShoppingFragment : Fragment(), Shopping2Adapter.OnItemClickListener {
         recyclerView = binding.RecyclerViewID
 
         binding.purchasesText.setOnClickListener {
-           //shoppingViewModel.getPurchases()
             getIBought()
         }
         binding.iSoldText.setOnClickListener {
             //shoppingViewModel.getPurchases()
             getISold()
         }
+        binding.iUploadText.setOnClickListener {
+            getIUpload()
+        }
+
         getIBought()
 
         return binding.root
@@ -59,7 +63,7 @@ class ShoppingFragment : Fragment(), Shopping2Adapter.OnItemClickListener {
     private fun adapterFun() {
         shopping2Adapter = Shopping2Adapter(requireActivity(), shopItem, this)
         val layoutManager: RecyclerView.LayoutManager =
-            GridLayoutManager(requireContext(), 1)
+            GridLayoutManager(requireContext(), 2)
 
         recyclerView!!.layoutManager = layoutManager
         recyclerView!!.adapter = shopping2Adapter
@@ -68,7 +72,7 @@ class ShoppingFragment : Fragment(), Shopping2Adapter.OnItemClickListener {
     private fun getIBought(){
         shopItem.clear()
 
-        db.collection("users").document(currentUser!!).collection("ProductsIBought").get()
+        currentUserDb.collection("ProductsIBought").get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     val productUrl = document.getString("productPhotoUrl")
@@ -76,7 +80,31 @@ class ShoppingFragment : Fragment(), Shopping2Adapter.OnItemClickListener {
                     val productcategory = document.getString("category")
                     Log.e("urun fiyat",productPrize.toString())
 
-                      shopItem.add(Shopping2DataClass(productUrl, productPrize, productcategory))
+                      shopItem.add(Shopping2DataClass(productUrl, productPrize, productcategory, false, false))
+                }
+                adapterFun()
+            }
+            .addOnFailureListener {
+                Log.e("hata nedeni shopping ", it.toString())
+            }
+    }
+    private fun getIUpload(){
+        shopItem.clear()
+
+        currentUserDb.collection("ProductsIUpload").get()
+            .addOnSuccessListener { documents ->
+                for (document in documents){
+                    val productUrl = document.getString("Product-Url")
+                    val productPrizeDb = document.getString("Product-Prize")
+                    val productcategory = document.getString("Product-Categories")
+                    val productDescription = document.getString("Product-Description")
+                    val numericValue = productPrizeDb?.replace("[^\\d.]".toRegex(), "")
+
+                    // Elde edilen sayısal değeri double'a çevirme
+                    val productPrize = numericValue?.toDouble()
+
+                    shopItem.add(Shopping2DataClass(productUrl, productPrize, productcategory, true, false ))
+
                 }
                 adapterFun()
             }
@@ -87,14 +115,14 @@ class ShoppingFragment : Fragment(), Shopping2Adapter.OnItemClickListener {
     private fun getISold(){
         shopItem.clear()
 
-        db.collection("users").document(currentUser!!).collection("ProductsISold").get()
+        currentUserDb.collection("ProductsISold").get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     val productUrl = document.getString("photoUrl")
                     val productPrize = document.getDouble("productPrice")
                     val productcategory = document.getString("category")
 
-                    shopItem.add(Shopping2DataClass(productUrl, productPrize, productcategory))
+                    shopItem.add(Shopping2DataClass(productUrl, productPrize, productcategory, false, true))
                 }
                 adapterFun()
             }

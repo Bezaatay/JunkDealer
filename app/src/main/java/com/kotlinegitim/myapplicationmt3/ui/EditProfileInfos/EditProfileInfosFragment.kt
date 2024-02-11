@@ -58,6 +58,8 @@ class EditProfileInfosFragment : Fragment() {
             val passwordText = binding.editTextpassword.text.toString()
 
             editProfileInfosViewModel.SaveChanges(usernameText, mailText, passwordText)
+
+            findNavController().navigate(R.id.action_editProfileInfosFragment_to_personelInfosFragment)
         }
 
         editProfileInfosViewModel._isChange.observe(viewLifecycleOwner) {

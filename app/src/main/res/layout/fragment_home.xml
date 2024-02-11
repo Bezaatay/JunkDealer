@@ -23,6 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nearProducts" />
 
+
         <EditText
             android:id="@+id/searchView"
             android:layout_width="match_parent"
@@ -38,7 +39,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:queryBackground="@android:color/transparent"
             app:queryHint="@string/search_bar_hint" />
-
 
         <TextView
             android:id="@+id/allProducts"
