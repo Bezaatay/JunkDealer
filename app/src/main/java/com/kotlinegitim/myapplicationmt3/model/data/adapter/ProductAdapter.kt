@@ -68,7 +68,7 @@ class ProductAdapter(
                 holder.imageViewHeart.setImageResource(R.drawable.hollowheart)
             }
 
-        /*
+
             holder.imageViewHeart.setOnClickListener {
                 // Kalbin durumunu tersine çevir
                 items[position].isHeartFilled = !items[position].isHeartFilled
@@ -81,7 +81,7 @@ class ProductAdapter(
                 }
             }
 
-         */
+
     }
     override fun getItemCount(): Int {
         return items.size
