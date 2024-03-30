@@ -71,7 +71,7 @@ class ProductAdapter(
 
             holder.imageViewHeart.setOnClickListener {
                 // Kalbin durumunu tersine çevir
-                items[position].isHeartFilled = !items[position].isHeartFilled
+                items[position].isHeartFilled = items[position].isHeartFilled
 
                 // Kalbin durumuna göre içi dolu veya boş kalp görüntüsüne geçiş yap
                 if (items[position].isHeartFilled == true) {
@@ -80,8 +80,6 @@ class ProductAdapter(
                     holder.imageViewHeart.setImageResource(R.drawable.hollowheart)
                 }
             }
-
-
     }
     override fun getItemCount(): Int {
         return items.size

@@ -5,6 +5,6 @@ data class HomeDataClass(
     var productPrice: String?,
     var productCategory: String?,
     var distance: Double?,
-    var isHeartFilled: Boolean
+    var isHeartFilled: Boolean?
 )
 
