@@ -1,6 +1,4 @@
-# Multiple Reservation Android Mobile Application.</p>
-
-  <img width="200" src="https://github.com/Bezaatay/Adventura/assets/133115182/bba09294-80f2-4fcb-b877-70c18425ac72" alt="logo design">
+#JunkDealer Android Mobile Application.</p>
 
 ## Overview
 
