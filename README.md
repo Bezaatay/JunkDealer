@@ -16,6 +16,7 @@ Nowadays, there are many applications developed to facilitate local trade and su
 | **Google Maps** | Integration for location-based services. |
 | **Firebase** | Used for backend. |
 | **MVVM Architecture** | Adopted to ensure a clear separation of concerns and facilitate maintainability and scalability. |
+| **Glide** | Load and cache images by URL. |
 
 
 ## Demo
