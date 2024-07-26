@@ -17,6 +17,8 @@ Nowadays, there are many applications developed to facilitate local trade and su
 | **Firebase** | Used for backend. |
 | **MVVM Architecture** | Adopted to ensure a clear separation of concerns and facilitate maintainability and scalability. |
 | **Glide** | Load and cache images by URL. |
+| **LiveData** | Build data objects that notify views when the underlying database changes. |
+| **View Binding** | Declaratively bind observable data to UI elements. |
 
 
 ## Demo
